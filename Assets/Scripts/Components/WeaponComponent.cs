@@ -16,5 +16,5 @@ namespace ShootEmUp
 
         [SerializeField]
         private Transform firePoint;
-    }
+    }      
 }
