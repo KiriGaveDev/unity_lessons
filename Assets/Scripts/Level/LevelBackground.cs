@@ -5,20 +5,25 @@ namespace ShootEmUp
 {
     public sealed class LevelBackground : MonoBehaviour
     {
+        [Serializable]
+        public sealed class Params
+        {
+            public float m_startPositionY;
+            public float m_endPositionY;
+            public float m_movingSpeedY;
+        }
+
+        [SerializeField] private Params m_params;
+
         private float startPositionY;
-
         private float endPositionY;
-
         private float movingSpeedY;
-
         private float positionX;
-
         private float positionZ;
 
         private Transform myTransform;
 
-        [SerializeField]
-        private Params m_params;
+      
 
         private void Awake()
         {
@@ -47,19 +52,6 @@ namespace ShootEmUp
                 this.movingSpeedY * Time.fixedDeltaTime,
                 this.positionZ
             );
-        }
-
-        [Serializable]
-        public sealed class Params
-        {
-            [SerializeField]
-            public float m_startPositionY;
-
-            [SerializeField]
-            public float m_endPositionY;
-
-            [SerializeField]
-            public float m_movingSpeedY;
-        }
+        }        
     }
 }
