@@ -4,19 +4,18 @@ namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour
     {
-        public delegate void FireHandler(GameObject enemy, Vector2 position, Vector2 direction);
-
-        public event FireHandler OnFire;
-
         [SerializeField] private WeaponComponent weaponComponent;
         [SerializeField] private EnemyMoveAgent moveAgent;
         [SerializeField] private float countdown;
 
-        private GameObject target;
+        private Transform target;
         private float currentTime;
+        private BulletSystem _bulletSystem;
 
-        public void SetTarget(GameObject target)
+
+        public void Init(BulletSystem bulletSystem, Transform target)
         {
+            _bulletSystem = bulletSystem;
             this.target = target;
         }
 
@@ -31,12 +30,7 @@ namespace ShootEmUp
             {
                 return;
             }
-            
-            if (!this.target.GetComponent<HitPointsComponent>().IsHitPointsExists())
-            {
-                return;
-            }
-
+                       
             this.currentTime -= Time.fixedDeltaTime;
             if (this.currentTime <= 0)
             {
@@ -50,7 +44,21 @@ namespace ShootEmUp
             var startPosition = this.weaponComponent.Position;
             var vector = (Vector2) this.target.transform.position - startPosition;
             var direction = vector.normalized;
-            this.OnFire?.Invoke(this.gameObject, startPosition, direction);
+
+            OnFire(startPosition, direction);
+        }
+
+        private void OnFire(Vector2 position, Vector2 direction)
+        {
+            _bulletSystem.FlyBulletByArgs(new BulletSystem.Args
+            {
+                isPlayer = false,
+                physicsLayer = (int)PhysicsLayer.ENEMY_BULLET,
+                color = Color.red,
+                damage = 1,
+                position = position,
+                velocity = direction * 2.0f
+            });
         }
     }
 }

@@ -10,7 +10,9 @@ namespace ShootEmUp
         private EnemyPositions enemyPositions;
 
         [SerializeField]
-        private GameObject character;
+        private Transform character;
+
+        [SerializeField] private BulletSystem _bulletSystem;
 
         [SerializeField]
         private Transform worldTransform;
@@ -20,20 +22,21 @@ namespace ShootEmUp
         private Transform container;
 
         [SerializeField]
-        private GameObject prefab;
+        private Enemy prefab;
 
-        private readonly Queue<GameObject> enemyPool = new();
+        private readonly Queue<Enemy> enemyPool = new();
         
         private void Awake()
         {
             for (var i = 0; i < 7; i++)
             {
                 var enemy = Instantiate(this.prefab, this.container);
+                enemy.InitEnemyAttack(this._bulletSystem, this.character);             
                 this.enemyPool.Enqueue(enemy);
             }
         }
 
-        public GameObject SpawnEnemy()
+        public Enemy SpawnEnemy()
         {
             if (!this.enemyPool.TryDequeue(out var enemy))
             {
@@ -46,13 +49,13 @@ namespace ShootEmUp
             enemy.transform.position = spawnPosition.position;
             
             var attackPosition = this.enemyPositions.RandomAttackPosition();
-            enemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition.position);
+            enemy.EnemyMoveAgent.SetDestination(attackPosition.position);
 
-            enemy.GetComponent<EnemyAttackAgent>().SetTarget(this.character);
+            
             return enemy;
         }
 
-        public void UnspawnEnemy(GameObject enemy)
+        public void UnspawnEnemy(Enemy enemy)
         {
             enemy.transform.SetParent(this.container);
             this.enemyPool.Enqueue(enemy);
