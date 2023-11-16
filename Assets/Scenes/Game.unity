@@ -1201,6 +1201,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2269492458956001678, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
         type: 3}
+      propertyPath: bulletConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105,
+        type: 2}
+    - target: {fileID: 2269492458956001678, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
+        type: 3}
+      propertyPath: bulletSystem
+      value: 
+      objectReference: {fileID: 363245577}
+    - target: {fileID: 2269492458956001678, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
+        type: 3}
       propertyPath: _bulletConfig
       value: 
       objectReference: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105,
