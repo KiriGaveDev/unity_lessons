@@ -4,13 +4,11 @@ namespace ShootEmUp
 {
     public sealed class InputManager : MonoBehaviour
     {
+        [SerializeField] private MoveComponent characterMoveComponent;
+        [SerializeField] private CharacterAttackComponent characterAttackComponent;
+
         private float horizontalDirection;
 
-        [SerializeField]
-        private MoveComponent characterMoveComponent;
-
-        [SerializeField]
-        private CharacterAttackComponent characterAttackComponent;
 
         private void Update()
         {

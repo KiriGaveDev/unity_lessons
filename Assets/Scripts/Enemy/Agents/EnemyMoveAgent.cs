@@ -4,16 +4,13 @@ namespace ShootEmUp
 {
     public sealed class EnemyMoveAgent : MonoBehaviour
     {
-        public bool IsReached
-        {
-            get { return this.isReached; }
-        }
-
         [SerializeField] private MoveComponent moveComponent;
 
         private Vector2 destination;
-
         private bool isReached;
+
+        public bool IsReached => isReached;
+       
 
         public void SetDestination(Vector2 endPoint)
         {

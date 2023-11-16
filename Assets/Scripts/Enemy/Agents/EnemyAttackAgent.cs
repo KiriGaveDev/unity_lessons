@@ -10,12 +10,12 @@ namespace ShootEmUp
 
         private Transform target;
         private float currentTime;
-        private BulletSystem _bulletSystem;
+        private BulletSystem bulletSystem;
 
 
         public void Init(BulletSystem bulletSystem, Transform target)
         {
-            _bulletSystem = bulletSystem;
+            this.bulletSystem = bulletSystem;
             this.target = target;
         }
 
@@ -50,7 +50,7 @@ namespace ShootEmUp
 
         private void OnFire(Vector2 position, Vector2 direction)
         {
-            _bulletSystem.FlyBulletByArgs(new BulletSystem.Args
+            bulletSystem.FlyBulletByArgs(new BulletSystem.Args
             {
                 isPlayer = false,
                 physicsLayer = (int)PhysicsLayer.ENEMY_BULLET,

@@ -4,20 +4,20 @@ using UnityEngine;
 public class CharacterAttackComponent : MonoBehaviour
 {
     [SerializeField] private WeaponComponent weaponComponent;
-    [SerializeField] private BulletSystem _bulletSystem;
-    [SerializeField] private BulletConfig _bulletConfig;
+    [SerializeField] private BulletSystem bulletSystem;
+    [SerializeField] private BulletConfig bulletConfig;
 
      
     public void Fire()
     {
-        _bulletSystem.FlyBulletByArgs(new BulletSystem.Args
+        bulletSystem.FlyBulletByArgs(new BulletSystem.Args
         {
             isPlayer = true,
-            physicsLayer = (int)this._bulletConfig.physicsLayer,
-            color = this._bulletConfig.color,
-            damage = this._bulletConfig.damage,
+            physicsLayer = (int)this.bulletConfig.physicsLayer,
+            color = this.bulletConfig.color,
+            damage = this.bulletConfig.damage,
             position = weaponComponent.Position,
-            velocity = weaponComponent.Rotation * Vector3.up * this._bulletConfig.speed
+            velocity = weaponComponent.Rotation * Vector3.up * this.bulletConfig.speed
         });
     }   
 }
