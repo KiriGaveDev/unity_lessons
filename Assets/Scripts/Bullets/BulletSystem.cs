@@ -40,6 +40,33 @@ namespace ShootEmUp
             }
         }
 
+        public void Fire(BulletConfig bulletConfig, WeaponComponent weaponComponent)
+        {
+            FlyBulletByArgs(new BulletSystem.Args
+            {
+                isPlayer = true,
+                physicsLayer = (int)bulletConfig.physicsLayer,
+                color = bulletConfig.color,
+                damage = bulletConfig.damage,
+                position = weaponComponent.Position,
+                velocity = weaponComponent.Rotation * Vector3.up * bulletConfig.speed
+            });
+        }
+
+
+        public void EnemyFire(Vector3 position, Vector3 direction)
+        {
+            FlyBulletByArgs(new BulletSystem.Args
+            {
+                isPlayer = false,
+                physicsLayer = (int)PhysicsLayer.ENEMY_BULLET,
+                color = Color.red,
+                damage = 1,
+                position = position,
+                velocity = direction * 2.0f
+            });
+        }
+
         public void FlyBulletByArgs(Args args)
         {
             if (this.m_bulletPool.TryDequeue(out var bullet))
