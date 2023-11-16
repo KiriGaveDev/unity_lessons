@@ -411,7 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPositions: {fileID: 7166351703523243261}
   character: {fileID: 4414282821800802396}
-  _bulletSystem: {fileID: 363245577}
+  bulletSystem: {fileID: 363245577}
   worldTransform: {fileID: 1683128698}
   container: {fileID: 178513672}
   prefab: {fileID: -462719607902362207, guid: 87fe189881a524806800482ac8eaaa83, type: 3}

@@ -8,7 +8,7 @@ namespace ShootEmUp
         [Header("Spawn")]
         [SerializeField] private EnemyPositions enemyPositions;
         [SerializeField] private Transform character;
-        [SerializeField] private BulletSystem _bulletSystem;
+        [SerializeField] private BulletSystem bulletSystem;
         [SerializeField] private Transform worldTransform;
 
         [Header("Pool")]
@@ -24,7 +24,7 @@ namespace ShootEmUp
             for (var i = 0; i < 7; i++)
             {
                 var enemy = Instantiate(this.prefab, this.container);
-                enemy.InitEnemyAttack(this._bulletSystem, this.character);             
+                enemy.InitEnemyAttack(this.bulletSystem, this.character);             
                 this.enemyPool.Enqueue(enemy);
             }
         }
