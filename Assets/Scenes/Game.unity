@@ -1214,6 +1214,11 @@ PrefabInstance:
       propertyPath: _bulletSystem
       value: 
       objectReference: {fileID: 363245577}
+    - target: {fileID: 6780205760569585088, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 3951702117947426123}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9699e7e809fd44b2bbf3d30c951ecbd2, type: 3}
 --- !u!1 &3951702117947426121

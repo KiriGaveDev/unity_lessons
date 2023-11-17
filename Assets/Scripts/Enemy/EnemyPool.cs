@@ -6,6 +6,7 @@ namespace ShootEmUp
     public sealed class EnemyPool : MonoBehaviour
     {
         [Header("Spawn")]
+        [SerializeField] private int enemyCount = 6;
         [SerializeField] private EnemyPositions enemyPositions;
         [SerializeField] private Transform character;
         [SerializeField] private BulletSystem bulletSystem;
@@ -21,13 +22,14 @@ namespace ShootEmUp
         
         private void Awake()
         {
-            for (var i = 0; i < 7; i++)
+            for (var i = 0; i <= enemyCount; i++)
             {
                 var enemy = Instantiate(this.prefab, this.container);
                 enemy.InitEnemyAttack(this.bulletSystem, this.character);             
                 this.enemyPool.Enqueue(enemy);
             }
         }
+
 
         public Enemy SpawnEnemy()
         {
