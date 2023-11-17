@@ -2,21 +2,15 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class InputManager : MonoBehaviour
+    public sealed class CharacterMoveController : MonoBehaviour
     {
         [SerializeField] private MoveComponent characterMoveComponent;
-        [SerializeField] private CharacterAttackComponent characterAttackComponent;
 
         private float horizontalDirection;
 
 
         private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                characterAttackComponent.Fire();
-            }           
-
+        { 
             if (Input.GetKey(KeyCode.A))
             {
                 horizontalDirection = -1;
@@ -31,9 +25,10 @@ namespace ShootEmUp
             }
         }
 
+
         private void FixedUpdate()
         {
-            characterMoveComponent.MoveByRigidbodyVelocity(new Vector2(horizontalDirection, 0) * Time.fixedDeltaTime);
+            characterMoveComponent.Move(new Vector2(horizontalDirection, 0) * Time.fixedDeltaTime);
         }
     }
 }
