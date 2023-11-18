@@ -9,13 +9,13 @@ public class CharacterDeathObserver : MonoBehaviour
 
     private void OnEnable()
     {
-        characterHitsComponent.hpEmpty += CharacterController_OnCharacterDied;
+        characterHitsComponent.OnHpEmpty += CharacterController_OnCharacterDied;
     }
 
 
     private void OnDisable()
     {
-        characterHitsComponent.hpEmpty -= CharacterController_OnCharacterDied;
+        characterHitsComponent.OnHpEmpty -= CharacterController_OnCharacterDied;
     }
 
 
