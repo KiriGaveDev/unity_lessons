@@ -45,7 +45,20 @@ namespace ShootEmUp
             var vector = (Vector2) this.target.transform.position - startPosition;
             var direction = vector.normalized;
 
-            bulletSystem.EnemyFire(startPosition, direction);
-        }      
+            OnFire(startPosition, direction);
+        }
+
+        private void OnFire(Vector2 position, Vector2 direction)
+        {
+            bulletSystem.FlyBulletByArgs(new BulletSystem.Args
+            {
+                isPlayer = false,
+                physicsLayer = (int)PhysicsLayer.ENEMY_BULLET,
+                color = Color.red,
+                damage = 1,
+                position = position,
+                velocity = direction * 2.0f
+            });
+        }
     }
 }
