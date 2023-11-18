@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 562298204}
   - component: {fileID: 562298207}
   - component: {fileID: 562298205}
+  - component: {fileID: 562298208}
   m_Layer: 0
   m_Name: EnemySystem
   m_TagString: Untagged
@@ -409,12 +410,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdcdf257e0242258e7a67fe13d80e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyCount: 6
   enemyPositions: {fileID: 7166351703523243261}
   character: {fileID: 4414282821800802396}
   bulletSystem: {fileID: 363245577}
   worldTransform: {fileID: 1683128698}
   container: {fileID: 178513672}
   prefab: {fileID: -462719607902362207, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
+--- !u!114 &562298208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562298203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ba0703c6f038c44a73668e2c97aa93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownSec: 1
+  enemyManager: {fileID: 562298205}
 --- !u!1 &883274639
 GameObject:
   m_ObjectHideFlags: 0

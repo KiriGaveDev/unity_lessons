@@ -67,6 +67,7 @@ namespace ShootEmUp
             });
         }
 
+
         public void FlyBulletByArgs(Args args)
         {
             if (this.m_bulletPool.TryDequeue(out var bullet))
@@ -90,12 +91,14 @@ namespace ShootEmUp
                 bullet.OnCollisionEntered += this.OnBulletCollision;
             }
         }
+
         
         private void OnBulletCollision(Bullet bullet, Collision2D collision)
         {
             BulletUtils.DealDamage(bullet, collision.gameObject);
             this.RemoveBullet(bullet);
         }
+
 
         private void RemoveBullet(Bullet bullet)
         {
@@ -106,6 +109,7 @@ namespace ShootEmUp
                 this.m_bulletPool.Enqueue(bullet);
             }
         }
+
         
         public struct Args
         {

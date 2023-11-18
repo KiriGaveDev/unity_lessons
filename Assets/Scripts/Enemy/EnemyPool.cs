@@ -20,6 +20,7 @@ namespace ShootEmUp
 
         private readonly Queue<Enemy> enemyPool = new();
         
+
         private void Awake()
         {
             for (var i = 0; i <= enemyCount; i++)
@@ -49,6 +50,7 @@ namespace ShootEmUp
             
             return enemy;
         }
+
 
         public void UnspawnEnemy(Enemy enemy)
         {
