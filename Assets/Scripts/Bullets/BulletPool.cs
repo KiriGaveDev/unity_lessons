@@ -1,9 +1,9 @@
 using ShootEmUp;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameListener;
 
-public class BulletPool : MonoBehaviour
+public class BulletPool : MonoBehaviour, IGamePauseListener, IGameResumeListener
 {
     [SerializeField] private int initialCount = 50;
 
@@ -16,6 +16,9 @@ public class BulletPool : MonoBehaviour
     public readonly List<Bullet> m_cache = new();
 
     [SerializeField] private Transform worldTransform;
+
+    private bool isActiveState = false;
+
 
     private void Awake()
     {
@@ -51,8 +54,14 @@ public class BulletPool : MonoBehaviour
         }
     }
 
+
     private void FixedUpdate()
     {
+        if (!isActiveState)
+        {
+            return;
+        }
+
         this.m_cache.Clear();
         this.m_cache.AddRange(this.m_activeBullets);
 
@@ -63,6 +72,22 @@ public class BulletPool : MonoBehaviour
             {
                 RemoveBullet(bullet);
             }
+        }
+    }
+
+    public void OnPauseGame()
+    {
+        foreach (var bullet in this.m_activeBullets)
+        {
+            bullet.PauseMove();
+        }
+    }
+
+    public void OnResumeGame()
+    {
+        foreach (var bullet in this.m_activeBullets)
+        {
+            bullet.ResumeMove();
         }
     }
 }

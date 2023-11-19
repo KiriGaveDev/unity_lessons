@@ -12,10 +12,21 @@ namespace ShootEmUp
 
         [SerializeField] private new Rigidbody2D rigidbody2D;
         [SerializeField] private SpriteRenderer spriteRenderer;
+                
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             this.OnCollisionEntered?.Invoke(this, collision);
+        }
+
+        public void PauseMove()
+        {
+            this.rigidbody2D.simulated = false;
+        }
+
+        public void ResumeMove()
+        {
+            this.rigidbody2D.simulated = true;
         }
 
         public void SetVelocity(Vector2 velocity)
