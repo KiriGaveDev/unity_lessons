@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 548057195}
   - component: {fileID: 548057194}
   - component: {fileID: 548057193}
+  - component: {fileID: 548057196}
   m_Layer: 5
   m_Name: ButtonPauseRsume
   m_TagString: Untagged
@@ -504,7 +505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -75.65338, y: -55.206116}
+  m_AnchoredPosition: {x: -75.65338, y: -55.206055}
   m_SizeDelta: {x: 151.3068, y: 110.4121}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &548057193
@@ -550,19 +551,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 548057194}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3951702117947426123}
-        m_TargetAssemblyTypeName: ShootEmUp.GameManager, Assembly-CSharp
-        m_MethodName: Pause
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &548057194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,6 +590,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548057191}
   m_CullTransparentMesh: 1
+--- !u!114 &548057196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548057191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07b031ef14c5054cb7519d8c7d723ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 548057193}
+  gameManager: {fileID: 3951702117947426123}
+  textComponent: {fileID: 583596109}
 --- !u!1 &562298203
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,10 +773,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.52
+  m_fontSize: 53.3
   m_fontSizeBase: 49.52
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0

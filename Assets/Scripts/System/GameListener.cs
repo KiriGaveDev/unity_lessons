@@ -23,4 +23,9 @@ public class GameListener
     {
         public void OnResumeGame();
     }
+
+    public interface IGameFinishListener : IGameListener
+    {
+        public void OnFinishGame();
+    }
 }

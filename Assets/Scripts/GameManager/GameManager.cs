@@ -5,7 +5,18 @@ namespace ShootEmUp
 {
     public sealed class GameManager : MonoBehaviour
     {
+        public enum GameState
+        {
+            None,
+            Started,
+            Paused,
+            Resumed,
+            Finished            
+        }
+
+        private GameState currentGameState;
         public List<GameListener.IGameListener> gameListeners = new List<GameListener.IGameListener>();
+             
 
         public void AddListener(GameListener.IGameListener listener)
         {
@@ -19,6 +30,11 @@ namespace ShootEmUp
             Time.timeScale = 0;
         }
 
+        public bool IsGamePaused()
+        {
+           return currentGameState == GameState.Paused;
+        }
+
 
         public void OnStart()
         {
@@ -29,6 +45,7 @@ namespace ShootEmUp
                     startListener.OnStartGame();
                 }
             }
+            currentGameState = GameState.Started;
         }
 
         
@@ -41,6 +58,8 @@ namespace ShootEmUp
                     pauseListener.OnPauseGame();
                 }
             }
+
+            currentGameState = GameState.Paused;
         }
 
 
@@ -53,8 +72,8 @@ namespace ShootEmUp
                     resumeListener.OnResumeGame();
                 }
             }
+
+            currentGameState = GameState.Resumed;
         }
-
-
     }
 }

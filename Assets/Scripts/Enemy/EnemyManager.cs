@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using static GameListener;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour
+    public sealed class EnemyManager : MonoBehaviour, IGamePauseListener, IGameResumeListener
     {
         [SerializeField] private EnemyPool enemyPool;     
                      
@@ -38,6 +38,24 @@ namespace ShootEmUp
                 enemyComponent.HitPointsComponent.OnHpEmpty -= this.OnDestroyed;
                 enemyPool.UnspawnEnemy(enemyComponent);
             }
-        }     
+        }
+
+
+        public void OnPauseGame()
+        {
+            foreach(var enemy in m_activeEnemies)
+            {
+                enemy.Pause();
+            }
+        }
+
+
+        public void OnResumeGame()
+        {
+            foreach (var enemy in m_activeEnemies)
+            {
+                enemy.Resume();
+            }
+        }
     }
 }

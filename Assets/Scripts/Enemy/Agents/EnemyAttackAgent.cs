@@ -1,4 +1,5 @@
 using UnityEngine;
+using static GameListener;
 
 namespace ShootEmUp
 {
@@ -12,6 +13,7 @@ namespace ShootEmUp
         private float currentTime;
         private BulletSystem bulletSystem;
 
+        
 
         public void Init(BulletSystem bulletSystem, Transform target)
         {
@@ -59,6 +61,6 @@ namespace ShootEmUp
                 position = position,
                 velocity = direction * 2.0f
             });
-        }
+        }      
     }
 }

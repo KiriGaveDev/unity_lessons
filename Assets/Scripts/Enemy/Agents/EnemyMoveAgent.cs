@@ -10,7 +10,7 @@ namespace ShootEmUp
         private bool isReached;
 
         public bool IsReached => isReached;
-       
+        
 
         public void SetDestination(Vector2 endPoint)
         {
@@ -34,6 +34,6 @@ namespace ShootEmUp
 
             var direction = vector.normalized * Time.fixedDeltaTime;
             this.moveComponent.Move(direction);
-        }
+        }       
     }
 }
