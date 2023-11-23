@@ -4,27 +4,28 @@ using TMPro;
 using UnityEngine;
 
 public class Timer : MonoBehaviour
-{
+{   
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private TextMeshProUGUI textComponent;
-    [SerializeField] private int time;
+    [SerializeField] private TextMeshProUGUI textComponent; 
+    [SerializeField] private GameObject pauseButton;
 
     private void Awake()
     {
         gameObject.SetActive(false);
     }
 
-    public void TryStartTimer()
+
+    public void StartTimer(int second)
     {
-        StartCoroutine(StartTimer());
+        StartCoroutine(StartTimerRoutine(second));
     }
 
 
-    public IEnumerator StartTimer()
+    private IEnumerator StartTimerRoutine(int seconds)
     {
-        int remineTime = time;
+        int remineTime = seconds;
 
-        for (int i = 0; i <= time; i++)
+        for (int i = 0; i <= seconds; i++)
         {
             textComponent.text = remineTime.ToString();
             yield return new WaitForSecondsRealtime(1);
@@ -33,8 +34,6 @@ public class Timer : MonoBehaviour
 
         gameManager.OnStart();
         gameObject.SetActive(false);
+        pauseButton.gameObject.SetActive(true);
     }
-
-    
-
 }

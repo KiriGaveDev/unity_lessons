@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
+    //  Не стал специально останавливать фон при паузе. Т.к выглядит прикольно, как в старых добрых играх = )
     public sealed class LevelBackground : MonoBehaviour
     {
         [Serializable]
