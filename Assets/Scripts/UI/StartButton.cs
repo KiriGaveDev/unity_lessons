@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Button button;
+    [SerializeField] private Timer timer;
+
+    private void Awake()
     {
-        
+        button.onClick.AddListener(Button_OnClick);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void Button_OnClick()
     {
-        
+        timer.gameObject.SetActive(true);
+        timer.TryStartTimer();
+        gameObject.SetActive(false);
     }
 }

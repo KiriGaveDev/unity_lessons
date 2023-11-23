@@ -9,15 +9,13 @@ namespace ShootEmUp
 
         private float horizontalDirection;
 
-        private bool isActiveState = false;
-
+        private void Awake()
+        {
+            enabled = false;
+        }
 
         private void Update()
-        {
-            if (!isActiveState)
-            {
-                return;
-            }
+        {            
 
             if (Input.GetKey(KeyCode.A))
             {
@@ -35,23 +33,23 @@ namespace ShootEmUp
 
 
         private void FixedUpdate()
-        {
+        {    
             characterMoveComponent.Move(new Vector2(horizontalDirection, 0) * Time.fixedDeltaTime);
         }
 
         public void OnPauseGame()
         {
-            isActiveState = false;
+            enabled = false;
         }
 
         public void OnStartGame()
         {
-            isActiveState = true;
+            enabled = true;
         }
 
         public void OnResumeGame()
         {
-            isActiveState = true;
+            enabled = true;
         }
     }
 }

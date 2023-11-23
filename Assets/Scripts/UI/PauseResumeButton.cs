@@ -16,7 +16,7 @@ public class PauseResumeButton : MonoBehaviour
 
 
     private void Button_OnClick()
-    {
+    {        
         if (gameManager.IsGamePaused())
         {
             gameManager.Resume();

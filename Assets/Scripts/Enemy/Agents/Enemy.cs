@@ -30,4 +30,10 @@ public class Enemy : MonoBehaviour
         enemyMoveAgent.enabled = true;
     }
 
+    public void OnStart()
+    {
+        enemyAttackAgent.enabled = true;
+        enemyMoveAgent.enabled = true;
+    }
+
 }

@@ -3,12 +3,12 @@ using System.Collections;
 using UnityEngine;
 using static GameListener;
 
-public class EnemyCooldowmSpawner : MonoBehaviour, IGamePauseListener, IGameResumeListener
+public class EnemyCooldowmSpawner : MonoBehaviour, IGamePauseListener, IGameResumeListener, IGameStartListener
 {
     [SerializeField] private float cooldownSec;
     [SerializeField] private EnemyManager enemyManager;
 
-    private bool canSpawn = true;
+    private bool canSpawn = false;
 
 
     private IEnumerator Start()
@@ -32,6 +32,11 @@ public class EnemyCooldowmSpawner : MonoBehaviour, IGamePauseListener, IGameResu
 
     public void OnResumeGame()
     {
-        canSpawn = false;
+        canSpawn = true;
+    }
+
+    public void OnStartGame()
+    {
+        canSpawn = true;
     }
 }
