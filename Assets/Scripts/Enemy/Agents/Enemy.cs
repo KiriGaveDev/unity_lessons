@@ -15,27 +15,6 @@ public class Enemy : MonoBehaviour
     public void InitEnemyAttack(BulletSystem bulletSystem, Transform character)
     {
         EnemyAttackAgent.Init(bulletSystem, character);    
-    }
-
-
-    public void Pause()
-    {     
-        enemyAttackAgent.enabled = false;
-        enemyMoveAgent.enabled = false;
-    }
-
-
-    public void Resume()
-    {      
-        enemyAttackAgent.enabled = true;
-        enemyMoveAgent.enabled = true;
-    }
-
-
-    public void OnStart()
-    {
-        enemyAttackAgent.enabled = true;
-        enemyMoveAgent.enabled = true;
-    }
+    }  
 
 }

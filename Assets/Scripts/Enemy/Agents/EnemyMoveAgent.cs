@@ -1,8 +1,9 @@
 using UnityEngine;
+using static GameListener;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyMoveAgent : MonoBehaviour
+    public sealed class EnemyMoveAgent : MonoBehaviour, IFixedUpdateListener
     {
         [SerializeField] private MoveComponent moveComponent;
 
@@ -14,26 +15,28 @@ namespace ShootEmUp
 
         public void SetDestination(Vector2 endPoint)
         {
-            this.destination = endPoint;
-            this.isReached = false;
+            destination = endPoint;
+            isReached = false;
         }
 
-        private void FixedUpdate()
+
+        public void OnFixedUpdate(float fixedDeltaTime)
         {
-            if (this.isReached)
+            if (isReached)
             {
                 return;
             }
             
-            var vector = this.destination - (Vector2) this.transform.position;
+            var vector = destination - (Vector2)transform.position;
+
             if (vector.magnitude <= 0.25f)
             {
-                this.isReached = true;
+                isReached = true;
                 return;
             }
 
             var direction = vector.normalized * Time.fixedDeltaTime;
-            this.moveComponent.Move(direction);
+            moveComponent.Move(direction);
         }       
     }
 }

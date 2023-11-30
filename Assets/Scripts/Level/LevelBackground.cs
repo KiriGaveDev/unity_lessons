@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
+using static GameListener;
 
 namespace ShootEmUp
 {
-    //  Не стал специально останавливать фон при паузе. Т.к выглядит прикольно, как в старых добрых играх = )
-    public sealed class LevelBackground : MonoBehaviour
+ 
+    public sealed class LevelBackground : MonoBehaviour, IFixedUpdateListener
     {
         [Serializable]
         public sealed class Params
@@ -37,23 +38,16 @@ namespace ShootEmUp
             positionX = position.x;
             positionZ = position.z;
         }
+              
 
-        private void FixedUpdate()
+        public void OnFixedUpdate(float fixedDeltaTime)
         {
             if (myTransform.position.y <= endPositionY)
             {
-                myTransform.position = new Vector3(
-                    positionX,
-                    startPositionY,
-                    positionZ
-                );
+                myTransform.position = new Vector3(positionX, startPositionY, positionZ);
             }
 
-            myTransform.position -= new Vector3(
-                positionX,
-                movingSpeedY * Time.fixedDeltaTime,
-                positionZ
-            );
-        }        
+            myTransform.position -= new Vector3(positionX, movingSpeedY * Time.fixedDeltaTime, positionZ);
+        }
     }
 }

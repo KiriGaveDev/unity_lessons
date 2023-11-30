@@ -3,20 +3,24 @@ using static GameListener;
 
 namespace ShootEmUp
 {
-    public sealed class CharacterMoveController : MonoBehaviour, IPauseListener, IStartListener, IResumeListener
+    public sealed class CharacterMoveController : MonoBehaviour,        
+        IFixedUpdateListener,
+        IUpdateListener
+
     {
+
         [SerializeField] private MoveComponent characterMoveComponent;
 
         private float horizontalDirection;
 
-        private void Awake()
+   
+        public void OnFixedUpdate(float fixedDeltaTime)
         {
-            enabled = false;
+            characterMoveComponent.Move(new Vector2(horizontalDirection, 0) * fixedDeltaTime);
         }
 
-        private void Update()
-        {            
-
+        public void OnUpdate(float deltaTime)
+        {
             if (Input.GetKey(KeyCode.A))
             {
                 horizontalDirection = -1;
@@ -29,27 +33,6 @@ namespace ShootEmUp
             {
                 horizontalDirection = 0;
             }
-        }
-
-
-        private void FixedUpdate()
-        {    
-            characterMoveComponent.Move(new Vector2(horizontalDirection, 0) * Time.fixedDeltaTime);
-        }
-
-        public void OnPause()
-        {
-            enabled = false;
-        }
-
-        public void OnStart()
-        {
-            enabled = true;
-        }
-
-        public void OnResume()
-        {
-            enabled = true;
-        }
+        }        
     }
 }

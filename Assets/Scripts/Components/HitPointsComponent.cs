@@ -17,11 +17,11 @@ namespace ShootEmUp
 
         public void TakeDamage(int damage)
         {
-            this.hitPoints -= damage;
+            hitPoints -= damage;
 
-            if (this.hitPoints <= 0)
+            if (hitPoints <= 0)
             {
-                this.OnHpEmpty?.Invoke(this.gameObject);
+                OnHpEmpty?.Invoke(gameObject);
             }
         }
     }

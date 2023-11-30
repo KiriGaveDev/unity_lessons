@@ -4,21 +4,26 @@ using static GameListener;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour, IPauseListener, IResumeListener
+    public sealed class EnemyManager : MonoBehaviour
     {
-        [SerializeField] private EnemyPool enemyPool;     
+        [SerializeField] private EnemyPool enemyPool;
+        [SerializeField] private GameManager gameManager;
                      
         private readonly HashSet<Enemy> activeEnemies = new();
                
 
         public void SpawnEnemy()
         {
-            var enemy = this.enemyPool.SpawnEnemy();
+            var enemy = enemyPool.SpawnEnemy();
+          
             if (enemy != null)
             {
-                if (this.activeEnemies.Add(enemy))
+                if (activeEnemies.Add(enemy))
                 {
-                    enemy.HitPointsComponent.OnHpEmpty += this.OnDestroyed;
+                    gameManager.AddListener(enemy.EnemyAttackAgent);
+                    gameManager.AddListener(enemy.EnemyMoveAgent);
+
+                    enemy.HitPointsComponent.OnHpEmpty += OnDestroyed;
                 }
             }
         }
@@ -35,27 +40,13 @@ namespace ShootEmUp
 
             if (activeEnemies.Remove(enemyComponent))
             {
-                enemyComponent.HitPointsComponent.OnHpEmpty -= this.OnDestroyed;
+                gameManager.RemoveListener(enemyComponent.EnemyAttackAgent);
+                gameManager.RemoveListener(enemyComponent.EnemyMoveAgent);
+               
                 enemyPool.UnspawnEnemy(enemyComponent);
+
+                enemyComponent.HitPointsComponent.OnHpEmpty -= OnDestroyed;
             }
-        }
-
-
-        public void OnPause()
-        {
-            foreach(var enemy in activeEnemies)
-            {
-                enemy.Pause();
-            }
-        }
-
-
-        public void OnResume()
-        {
-            foreach (var enemy in activeEnemies)
-            {
-                enemy.Resume();
-            }
-        }
+        }       
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GameListener;
 
-public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
+public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener, IFixedUpdateListener
 {
     [SerializeField] private int initialCount = 50;
 
@@ -23,10 +23,10 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
 
     private void Awake()
     {
-        for (var i = 0; i < this.initialCount; i++)
+        for (var i = 0; i < initialCount; i++)
         {
-            var bullet = Instantiate(this.prefab, this.container);
-            this.bulletPool.Enqueue(bullet);
+            var bullet = Instantiate(prefab, container);
+            bulletPool.Enqueue(bullet);
         }
     }
         
@@ -35,11 +35,11 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
     {
         if (bulletPool.TryDequeue(out var bullet))
         {
-            bullet.transform.SetParent(this.worldTransform);
+            bullet.transform.SetParent(worldTransform);
         }
         else
         {
-            bullet = Instantiate(this.prefab, this.worldTransform);
+            bullet = Instantiate(prefab, worldTransform);
         }
 
         return bullet;
@@ -50,13 +50,13 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
     {
         if (activeBullets.Remove(bullet))
         {           
-            bullet.transform.SetParent(this.container);
-            this.bulletPool.Enqueue(bullet);
+            bullet.transform.SetParent(container);
+            bulletPool.Enqueue(bullet);
         }
     }
 
 
-    private void FixedUpdate()
+    public void OnFixedUpdate(float fixedDeltaTime)
     {
         if (!isActiveState)
         {
@@ -76,6 +76,7 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
         }
     }
 
+
     public void OnPause()
     {
         foreach (var bullet in activeBullets)
@@ -84,11 +85,12 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
         }
     }
 
+
     public void OnResume()
     {
         foreach (var bullet in activeBullets)
         {
             bullet.ResumeMove();
         }
-    }
+    }   
 }

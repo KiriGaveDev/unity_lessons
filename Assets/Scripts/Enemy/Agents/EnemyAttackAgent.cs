@@ -3,7 +3,7 @@ using static GameListener;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackAgent : MonoBehaviour
+    public sealed class EnemyAttackAgent : MonoBehaviour, IFixedUpdateListener
     {
         [SerializeField] private WeaponComponent weaponComponent;
         [SerializeField] private EnemyMoveAgent moveAgent;
@@ -13,7 +13,7 @@ namespace ShootEmUp
         private float currentTime;
         private BulletSystem bulletSystem;
 
-        
+
 
         public void Init(BulletSystem bulletSystem, Transform target)
         {
@@ -21,34 +21,38 @@ namespace ShootEmUp
             this.target = target;
         }
 
+
         public void Reset()
         {
-            this.currentTime = this.countdown;
+            currentTime = countdown;
         }
 
-        private void FixedUpdate()
+
+        public void OnFixedUpdate(float fixedDeltaTime)
         {
-            if (!this.moveAgent.IsReached)
+            if (!moveAgent.IsReached)
             {
                 return;
             }
-                       
-            this.currentTime -= Time.fixedDeltaTime;
-            if (this.currentTime <= 0)
+
+            currentTime -= Time.fixedDeltaTime;
+            if (currentTime <= 0)
             {
-                this.Fire();
-                this.currentTime += this.countdown;
+                Fire();
+                currentTime += countdown;
             }
         }
 
+
         private void Fire()
         {
-            var startPosition = this.weaponComponent.Position;
-            var vector = (Vector2) this.target.transform.position - startPosition;
+            var startPosition = weaponComponent.Position;
+            var vector = (Vector2)target.transform.position - startPosition;
             var direction = vector.normalized;
 
             OnFire(startPosition, direction);
         }
+
 
         private void OnFire(Vector2 position, Vector2 direction)
         {
@@ -61,6 +65,6 @@ namespace ShootEmUp
                 position = position,
                 velocity = direction * 2.0f
             });
-        }      
+        }
     }
 }

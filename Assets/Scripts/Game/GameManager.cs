@@ -7,8 +7,7 @@ namespace ShootEmUp
     {
         private enum GameState
         {
-            None,
-            Started,
+            None,         
             Paused,
             Playing,
             Finished            
@@ -135,7 +134,7 @@ namespace ShootEmUp
                     startListener.OnStart();
                 }
             }
-            currentGameState = GameState.Started;
+            currentGameState = GameState.Playing;
         }
 
         

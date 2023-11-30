@@ -12,6 +12,7 @@ public class PauseResumeButtonsListener : MonoBehaviour,
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button resumeButton;
 
+
     public void OnStart()
     {     
         pauseButton.onClick.AddListener(OnPauseButtonClicked);
