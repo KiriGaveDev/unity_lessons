@@ -1,13 +1,15 @@
 using ShootEmUp;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
-{   
-    [SerializeField] private GameManager gameManager;
+public class UiCountdownTimer : MonoBehaviour
+{
+    public Action OnCompleted;
+       
     [SerializeField] private TextMeshProUGUI textComponent; 
-    [SerializeField] private GameObject pauseButton;
+   
 
     private void Awake()
     {
@@ -23,17 +25,16 @@ public class Timer : MonoBehaviour
 
     private IEnumerator StartTimerRoutine(int seconds)
     {
-        int remineTime = seconds;
+        int reminingTime = seconds;
 
         for (int i = 0; i <= seconds; i++)
         {
-            textComponent.text = remineTime.ToString();
+            textComponent.text = reminingTime.ToString();
             yield return new WaitForSecondsRealtime(1);
-            remineTime--;
+            reminingTime--;
         }
 
-        gameManager.OnStart();
         gameObject.SetActive(false);
-        pauseButton.gameObject.SetActive(true);
+        OnCompleted?.Invoke();        
     }
 }

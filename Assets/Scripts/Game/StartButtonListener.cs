@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartGameManager : MonoBehaviour
+public class StartButtonListener : MonoBehaviour
 {
     [SerializeField] private Button startButton;
-    [SerializeField] private Timer timer;
+    [SerializeField] private UiCountdownTimer timer;
     [SerializeField] private int time;
 
 

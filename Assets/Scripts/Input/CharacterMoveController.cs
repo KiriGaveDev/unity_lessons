@@ -3,7 +3,7 @@ using static GameListener;
 
 namespace ShootEmUp
 {
-    public sealed class CharacterMoveController : MonoBehaviour, IGamePauseListener, IGameStartListener, IGameResumeListener
+    public sealed class CharacterMoveController : MonoBehaviour, IPauseListener, IStartListener, IResumeListener
     {
         [SerializeField] private MoveComponent characterMoveComponent;
 
@@ -37,17 +37,17 @@ namespace ShootEmUp
             characterMoveComponent.Move(new Vector2(horizontalDirection, 0) * Time.fixedDeltaTime);
         }
 
-        public void OnPauseGame()
+        public void OnPause()
         {
             enabled = false;
         }
 
-        public void OnStartGame()
+        public void OnStart()
         {
             enabled = true;
         }
 
-        public void OnResumeGame()
+        public void OnResume()
         {
             enabled = true;
         }

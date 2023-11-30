@@ -1,7 +1,7 @@
 using UnityEngine;
 using static GameListener;
 
-public class CharacterAttackController: MonoBehaviour, IGamePauseListener, IGameStartListener, IGameResumeListener
+public class CharacterAttackController: MonoBehaviour, IPauseListener, IStartListener, IResumeListener
 {
     [SerializeField] private CharacterAttackComponent characterAttackComponent;
 
@@ -18,17 +18,17 @@ public class CharacterAttackController: MonoBehaviour, IGamePauseListener, IGame
         }
     }
 
-    public void OnPauseGame()
+    public void OnPause()
     {
         enabled = false;
     }
 
-    public void OnResumeGame()
+    public void OnResume()
     {
         enabled = true;
     }
 
-    public void OnStartGame()
+    public void OnStart()
     {
         enabled = true;
     }

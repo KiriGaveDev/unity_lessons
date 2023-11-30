@@ -12,7 +12,7 @@ public class GameManagerInstaller : MonoBehaviour
         var listeners = GetComponentsInChildren<GameListener.IGameListener>();
 
         foreach (var listener in listeners)
-        {
+        {          
             gameManager.AddListener(listener);
         }
     }

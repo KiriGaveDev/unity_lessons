@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using static GameListener;
 
-public class EnemyCooldowmSpawner : MonoBehaviour, IGamePauseListener, IGameResumeListener, IGameStartListener
+public class EnemyCooldowmSpawner : MonoBehaviour, IPauseListener, IResumeListener, IStartListener
 {
     [SerializeField] private float cooldownSec;
     [SerializeField] private EnemyManager enemyManager;
@@ -25,17 +25,17 @@ public class EnemyCooldowmSpawner : MonoBehaviour, IGamePauseListener, IGameResu
     }
 
 
-    public void OnPauseGame()
+    public void OnPause()
     {
         canSpawn = false;
     }
 
-    public void OnResumeGame()
+    public void OnResume()
     {
         canSpawn = true;
     }
 
-    public void OnStartGame()
+    public void OnStart()
     {
         canSpawn = true;
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GameListener;
 
-public class BulletPool : MonoBehaviour, IGamePauseListener, IGameResumeListener
+public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
 {
     [SerializeField] private int initialCount = 50;
 
@@ -75,7 +75,7 @@ public class BulletPool : MonoBehaviour, IGamePauseListener, IGameResumeListener
         }
     }
 
-    public void OnPauseGame()
+    public void OnPause()
     {
         foreach (var bullet in this.m_activeBullets)
         {
@@ -83,7 +83,7 @@ public class BulletPool : MonoBehaviour, IGamePauseListener, IGameResumeListener
         }
     }
 
-    public void OnResumeGame()
+    public void OnResume()
     {
         foreach (var bullet in this.m_activeBullets)
         {

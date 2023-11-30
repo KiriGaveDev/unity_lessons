@@ -4,7 +4,7 @@ using static GameListener;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour, IGamePauseListener, IGameResumeListener
+    public sealed class EnemyManager : MonoBehaviour, IPauseListener, IResumeListener
     {
         [SerializeField] private EnemyPool enemyPool;     
                      
@@ -41,7 +41,7 @@ namespace ShootEmUp
         }
 
 
-        public void OnPauseGame()
+        public void OnPause()
         {
             foreach(var enemy in m_activeEnemies)
             {
@@ -50,7 +50,7 @@ namespace ShootEmUp
         }
 
 
-        public void OnResumeGame()
+        public void OnResume()
         {
             foreach (var enemy in m_activeEnemies)
             {
