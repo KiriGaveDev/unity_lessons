@@ -15,6 +15,7 @@ namespace ShootEmUp
             hitPointsComponent.OnHpEmpty += HitPointsComponent_HpEmpty;
         }
 
+
         private void OnDisable()
         {
             hitPointsComponent.OnHpEmpty -= HitPointsComponent_HpEmpty;

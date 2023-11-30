@@ -14,6 +14,7 @@ namespace ShootEmUp
             return this.hitPoints > 0;
         }
 
+
         public void TakeDamage(int damage)
         {
             this.hitPoints -= damage;

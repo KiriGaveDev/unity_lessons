@@ -8,7 +8,7 @@ namespace ShootEmUp
     {
         [SerializeField] private EnemyPool enemyPool;     
                      
-        private readonly HashSet<Enemy> m_activeEnemies = new();
+        private readonly HashSet<Enemy> activeEnemies = new();
                
 
         public void SpawnEnemy()
@@ -16,7 +16,7 @@ namespace ShootEmUp
             var enemy = this.enemyPool.SpawnEnemy();
             if (enemy != null)
             {
-                if (this.m_activeEnemies.Add(enemy))
+                if (this.activeEnemies.Add(enemy))
                 {
                     enemy.HitPointsComponent.OnHpEmpty += this.OnDestroyed;
                 }
@@ -33,7 +33,7 @@ namespace ShootEmUp
                 return;
             }
 
-            if (m_activeEnemies.Remove(enemyComponent))
+            if (activeEnemies.Remove(enemyComponent))
             {
                 enemyComponent.HitPointsComponent.OnHpEmpty -= this.OnDestroyed;
                 enemyPool.UnspawnEnemy(enemyComponent);
@@ -43,7 +43,7 @@ namespace ShootEmUp
 
         public void OnPause()
         {
-            foreach(var enemy in m_activeEnemies)
+            foreach(var enemy in activeEnemies)
             {
                 enemy.Pause();
             }
@@ -52,7 +52,7 @@ namespace ShootEmUp
 
         public void OnResume()
         {
-            foreach (var enemy in m_activeEnemies)
+            foreach (var enemy in activeEnemies)
             {
                 enemy.Resume();
             }

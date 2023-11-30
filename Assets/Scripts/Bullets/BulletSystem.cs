@@ -19,7 +19,7 @@ namespace ShootEmUp
             bullet.isPlayer = args.isPlayer;
             bullet.SetVelocity(args.velocity);
             
-            if (bulletPool.m_activeBullets.Add(bullet))
+            if (bulletPool.activeBullets.Add(bullet))
             {
                 bullet.OnCollisionEntered += this.OnBulletCollision;
             }

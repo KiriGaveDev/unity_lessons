@@ -11,11 +11,12 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
     [SerializeField] private Bullet prefab;
     [SerializeField] private LevelBounds levelBounds;
 
-    public readonly Queue<Bullet> m_bulletPool = new();
-    public readonly HashSet<Bullet> m_activeBullets = new();
-    public readonly List<Bullet> m_cache = new();
-
     [SerializeField] private Transform worldTransform;
+
+    public readonly Queue<Bullet> bulletPool = new();
+    public readonly HashSet<Bullet> activeBullets = new();
+    public readonly List<Bullet> cache = new();
+    
 
     private bool isActiveState = false;
 
@@ -25,14 +26,14 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
         for (var i = 0; i < this.initialCount; i++)
         {
             var bullet = Instantiate(this.prefab, this.container);
-            this.m_bulletPool.Enqueue(bullet);
+            this.bulletPool.Enqueue(bullet);
         }
     }
         
 
     public Bullet GetBullet()
     {
-        if (m_bulletPool.TryDequeue(out var bullet))
+        if (bulletPool.TryDequeue(out var bullet))
         {
             bullet.transform.SetParent(this.worldTransform);
         }
@@ -47,10 +48,10 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
 
     public void RemoveBullet(Bullet bullet)
     {
-        if (this.m_activeBullets.Remove(bullet))
+        if (activeBullets.Remove(bullet))
         {           
             bullet.transform.SetParent(this.container);
-            this.m_bulletPool.Enqueue(bullet);
+            this.bulletPool.Enqueue(bullet);
         }
     }
 
@@ -62,13 +63,13 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
             return;
         }
 
-        this.m_cache.Clear();
-        this.m_cache.AddRange(this.m_activeBullets);
+        cache.Clear();
+        cache.AddRange(activeBullets);
 
-        for (int i = 0, count = this.m_cache.Count; i < count; i++)
+        for (int i = 0, count = cache.Count; i < count; i++)
         {
-            var bullet = this.m_cache[i];
-            if (!this.levelBounds.InBounds(bullet.transform.position))
+            var bullet = cache[i];
+            if (!levelBounds.InBounds(bullet.transform.position))
             {
                 RemoveBullet(bullet);
             }
@@ -77,7 +78,7 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
 
     public void OnPause()
     {
-        foreach (var bullet in this.m_activeBullets)
+        foreach (var bullet in activeBullets)
         {
             bullet.PauseMove();
         }
@@ -85,7 +86,7 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener
 
     public void OnResume()
     {
-        foreach (var bullet in this.m_activeBullets)
+        foreach (var bullet in activeBullets)
         {
             bullet.ResumeMove();
         }

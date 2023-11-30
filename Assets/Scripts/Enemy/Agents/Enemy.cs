@@ -24,11 +24,13 @@ public class Enemy : MonoBehaviour
         enemyMoveAgent.enabled = false;
     }
 
+
     public void Resume()
     {      
         enemyAttackAgent.enabled = true;
         enemyMoveAgent.enabled = true;
     }
+
 
     public void OnStart()
     {

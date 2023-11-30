@@ -23,15 +23,13 @@ public class PauseResumeButtonStateController : MonoBehaviour,
     }
 
     public void OnPause()
-    {
-        Debug.LogError("пауза");
+    {        
         pauseButton.gameObject.SetActive(false);
         resumeButton.gameObject.SetActive(true);
     }
 
     public void OnResume()
-    {
-        Debug.LogError("ресуме");
+    {       
         pauseButton.gameObject.SetActive(true);
         resumeButton.gameObject.SetActive(false);
     }

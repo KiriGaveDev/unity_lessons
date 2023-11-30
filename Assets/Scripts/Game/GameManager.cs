@@ -15,11 +15,54 @@ namespace ShootEmUp
         }
 
         private GameState currentGameState;
-        public List<GameListener.IGameListener> gameListeners = new ();
 
-        public List<GameListener.IUpdateListener> updateListeners = new ();
-        public List<GameListener.IFixedUpdateListener> fixedUpdateListeners = new ();
-        public List<GameListener.ILateUpdateListener> lateUpdateListeners = new ();
+        private List<GameListener.IGameListener> gameListeners = new ();
+        
+        private List<GameListener.IUpdateListener> updateListeners = new ();
+        private List<GameListener.IFixedUpdateListener> fixedUpdateListeners = new ();
+        private List<GameListener.ILateUpdateListener> lateUpdateListeners = new ();
+
+
+        private void Update()
+        {
+            if(currentGameState != GameState.Playing)
+            {
+                return;
+            }
+
+            for (int i = 0; i < updateListeners.Count; i++)
+            {
+                updateListeners[i].OnUpdate(Time.deltaTime);
+            }
+        }
+
+
+        private void FixedUpdate()
+        {
+            if (currentGameState != GameState.Playing)
+            {
+                return;
+            }
+
+            for (int i = 0; i < fixedUpdateListeners.Count; i++)
+            {
+                fixedUpdateListeners[i].OnFixedUpdate(Time.fixedDeltaTime);
+            }
+        }
+
+
+        private void LateUpdate()
+        {
+            if (currentGameState != GameState.Playing)
+            {
+                return;
+            }
+
+            for (int i = 0; i < lateUpdateListeners.Count; i++)
+            {
+                fixedUpdateListeners[i].OnFixedUpdate(Time.deltaTime);
+            }
+        }
 
 
         public void AddListener(GameListener.IGameListener listener)
@@ -98,6 +141,11 @@ namespace ShootEmUp
         
         public void OnPause()
         {
+            if (currentGameState != GameState.Playing)
+            {
+                return;
+            }
+
             foreach (var gameListener in gameListeners)
             {
                 if (gameListener is GameListener.IPauseListener pauseListener)
@@ -112,6 +160,11 @@ namespace ShootEmUp
 
         public void OnResume()
         {
+            if (currentGameState != GameState.Paused)
+            {
+                return;
+            }
+
             foreach (var gameListener in gameListeners)
             {
                 if (gameListener is GameListener.IResumeListener resumeListener)

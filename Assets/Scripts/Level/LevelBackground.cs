@@ -9,12 +9,12 @@ namespace ShootEmUp
         [Serializable]
         public sealed class Params
         {
-            public float m_startPositionY;
-            public float m_endPositionY;
-            public float m_movingSpeedY;
+            public float startPositionY;
+            public float endPositionY;
+            public float movingSpeedY;
         }
 
-        [SerializeField] private Params m_params;
+        [SerializeField] private Params parameters;
 
         private float startPositionY;
         private float endPositionY;
@@ -28,30 +28,31 @@ namespace ShootEmUp
 
         private void Awake()
         {
-            this.startPositionY = this.m_params.m_startPositionY;
-            this.endPositionY = this.m_params.m_endPositionY;
-            this.movingSpeedY = this.m_params.m_movingSpeedY;
-            this.myTransform = this.transform;
-            var position = this.myTransform.position;
-            this.positionX = position.x;
-            this.positionZ = position.z;
+            startPositionY = parameters.startPositionY;
+            endPositionY = parameters.endPositionY;
+            movingSpeedY = parameters.movingSpeedY;
+            myTransform = transform; 
+
+            var position = myTransform.position;
+            positionX = position.x;
+            positionZ = position.z;
         }
 
         private void FixedUpdate()
         {
-            if (this.myTransform.position.y <= this.endPositionY)
+            if (myTransform.position.y <= endPositionY)
             {
-                this.myTransform.position = new Vector3(
-                    this.positionX,
-                    this.startPositionY,
-                    this.positionZ
+                myTransform.position = new Vector3(
+                    positionX,
+                    startPositionY,
+                    positionZ
                 );
             }
 
-            this.myTransform.position -= new Vector3(
-                this.positionX,
-                this.movingSpeedY * Time.fixedDeltaTime,
-                this.positionZ
+            myTransform.position -= new Vector3(
+                positionX,
+                movingSpeedY * Time.fixedDeltaTime,
+                positionZ
             );
         }        
     }
