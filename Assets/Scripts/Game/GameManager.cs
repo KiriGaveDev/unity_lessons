@@ -59,7 +59,7 @@ namespace ShootEmUp
 
             for (int i = 0; i < lateUpdateListeners.Count; i++)
             {
-                fixedUpdateListeners[i].OnFixedUpdate(Time.deltaTime);
+                lateUpdateListeners[i].OnLateUpdate(Time.deltaTime);
             }
         }
 
@@ -187,42 +187,6 @@ namespace ShootEmUp
             }
 
             currentGameState= GameState.Finished;
-        }
-
-
-        public void OnUpdate()
-        {
-            foreach (var gameListener in gameListeners)
-            {
-                if (gameListener is GameListener.IUpdateListener updateListener)
-                {
-                    updateListener.OnUpdate(Time.deltaTime);
-                }
-            }            
-        }
-
-
-        public void OnFixedUpdate()
-        {
-            foreach (var gameListener in gameListeners)
-            {
-                if (gameListener is GameListener.IFixedUpdateListener fixedUpdateListener)
-                {
-                    fixedUpdateListener.OnFixedUpdate(Time.fixedDeltaTime);
-                }
-            }                        
-        }
-
-
-        public void OnLateUpdate()
-        {
-            foreach (var gameListener in gameListeners)
-            {
-                if (gameListener is GameListener.ILateUpdateListener lateUpdateListener)
-                {
-                    lateUpdateListener.OnLateUpdate(Time.deltaTime);
-                }
-            }           
         }
     }
 }

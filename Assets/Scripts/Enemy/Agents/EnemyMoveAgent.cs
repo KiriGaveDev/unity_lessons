@@ -6,6 +6,7 @@ namespace ShootEmUp
     public sealed class EnemyMoveAgent : MonoBehaviour, IFixedUpdateListener
     {
         [SerializeField] private MoveComponent moveComponent;
+        [SerializeField] private float moveTreshold = 0.25f;
 
         private Vector2 destination;
         private bool isReached;
@@ -29,7 +30,7 @@ namespace ShootEmUp
             
             var vector = destination - (Vector2)transform.position;
 
-            if (vector.magnitude <= 0.25f)
+            if (vector.sqrMagnitude <= moveTreshold * moveTreshold)
             {
                 isReached = true;
                 return;
