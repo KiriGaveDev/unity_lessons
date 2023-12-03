@@ -1,10 +1,20 @@
+using ShootEmUp;
 using UnityEngine;
+using Zenject;
 using static GameListener;
 
-public class CharacterAttackController: MonoBehaviour, IUpdateListener
+public class CharacterAttackController : IUpdateListener
 {
-    [SerializeField] private CharacterAttackComponent characterAttackComponent;
-        
+    private CharacterAttackComponent characterAttackComponent;
+
+
+    [Inject]
+    public CharacterAttackController(CharacterAttackComponent characterAttackComponent, GameManager gameManager)
+    {        
+        this.characterAttackComponent = characterAttackComponent;
+        gameManager.AddListener(this);
+    }
+
 
     public void OnUpdate(float deltaTime)
     {

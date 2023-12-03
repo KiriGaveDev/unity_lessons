@@ -1,26 +1,30 @@
 using ShootEmUp;
 using UnityEngine;
+using Zenject;
 
-
-public class CharacterDeathObserver : MonoBehaviour
+public class CharacterDeathObserver : IInitializable
 {
-    [SerializeField] private HitPointsComponent characterHitsComponent;
-    [SerializeField] private GameManager gameManager;
+    private HitPointsComponent characterHitsComponent;
+    private GameManager gameManager;
 
-    private void OnEnable()
+
+   // [Inject]
+    public CharacterDeathObserver(HitPointsComponent characterHitsComponent, GameManager gameManager)
     {
-        characterHitsComponent.OnHpEmpty += CharacterController_OnCharacterDied;
+        this.characterHitsComponent = characterHitsComponent;
+        this.gameManager = gameManager;
     }
 
-
-    private void OnDisable()
-    {
-        characterHitsComponent.OnHpEmpty -= CharacterController_OnCharacterDied;
-    }
-
-
+  
     private void CharacterController_OnCharacterDied(GameObject gameObject)
     {
         gameManager.FinishGame();
+        characterHitsComponent.OnHpEmpty -= CharacterController_OnCharacterDied;
     }
+
+    public void Initialize()
+    {
+        Debug.LogError("подписался");
+        characterHitsComponent.OnHpEmpty += CharacterController_OnCharacterDied;
+    }   
 }

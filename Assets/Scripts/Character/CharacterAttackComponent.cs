@@ -1,13 +1,23 @@
 using ShootEmUp;
 using UnityEngine;
+using Zenject;
 
-public class CharacterAttackComponent : MonoBehaviour
+public class CharacterAttackComponent
 {
-    [SerializeField] private WeaponComponent weaponComponent;
-    [SerializeField] private BulletSystem bulletSystem;
-    [SerializeField] private BulletConfig bulletConfig;
+    private WeaponComponent weaponComponent;
+    private BulletSystem bulletSystem;
+    private BulletConfig bulletConfig;
 
-     
+
+    [Inject]
+    public CharacterAttackComponent(WeaponComponent weaponComponent, BulletSystem bulletSystem, BulletConfig bulletConfig)
+    {
+        this.weaponComponent = weaponComponent;
+        this.bulletSystem = bulletSystem;
+        this.bulletConfig = bulletConfig;
+    }
+
+
     public void Fire()
     {
         bulletSystem.FlyBulletByArgs(new BulletSystem.Args
@@ -19,6 +29,6 @@ public class CharacterAttackComponent : MonoBehaviour
             position = weaponComponent.Position,
             velocity = weaponComponent.Rotation * Vector3.up * bulletConfig.speed
         });
-    }   
+    }
 }
 
