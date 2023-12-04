@@ -1,15 +1,22 @@
 using ShootEmUp;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 using static GameListener;
 
 public class EnemyCooldowmSpawner : MonoBehaviour, IPauseListener, IResumeListener, IStartListener
 {
     [SerializeField] private float cooldownSec;
-    [SerializeField] private EnemyManager enemyManager;
 
+    private EnemyManager enemyManager;
     private bool canSpawn = false;
 
+
+    [Inject]
+    private void Construct(EnemyManager enemyManager)
+    {
+        this.enemyManager = enemyManager;
+    }
 
     private IEnumerator Start()
     {
