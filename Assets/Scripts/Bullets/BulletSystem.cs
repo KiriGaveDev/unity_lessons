@@ -3,11 +3,17 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class BulletSystem : MonoBehaviour
+    public sealed class BulletSystem 
     {   
-        [SerializeField] private BulletPool bulletPool;        
+        private BulletPool bulletPool;        
 
-       
+
+        public BulletSystem(BulletPool bulletPool)
+        { 
+            this.bulletPool = bulletPool;
+        }
+
+        
         public void FlyBulletByArgs(Args args)
         {
             Bullet bullet = bulletPool.GetBullet();

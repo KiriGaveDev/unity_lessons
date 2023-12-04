@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
@@ -9,7 +10,9 @@ namespace ShootEmUp
         [SerializeField] private int enemyCount = 6;
         [SerializeField] private EnemyPositions enemyPositions;
         [SerializeField] private Transform character;
-        [SerializeField] private BulletSystem bulletSystem;
+
+        private BulletSystem bulletSystem;
+
         [SerializeField] private Transform worldTransform;
 
         [Header("Pool")]
@@ -19,7 +22,12 @@ namespace ShootEmUp
         [SerializeField] private Enemy prefab;
 
         private readonly Queue<Enemy> enemyPool = new();
-        
+
+        [Inject]
+        private void Construct(BulletSystem bulletSystem)
+        {
+            this.bulletSystem = bulletSystem;
+        }
 
         private void Awake()
         {
