@@ -8,7 +8,7 @@ public class CharacterDeathObserver : IInitializable
     private GameManager gameManager;
 
 
-   // [Inject]
+    [Inject]
     public CharacterDeathObserver(HitPointsComponent characterHitsComponent, GameManager gameManager)
     {
         this.characterHitsComponent = characterHitsComponent;
@@ -23,8 +23,7 @@ public class CharacterDeathObserver : IInitializable
     }
 
     public void Initialize()
-    {
-        Debug.LogError("подписался");
+    {       
         characterHitsComponent.OnHpEmpty += CharacterController_OnCharacterDied;
     }   
 }

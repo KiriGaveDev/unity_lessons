@@ -18,8 +18,9 @@ public class CharacterInstaller : MonoInstaller
         Container.Bind<BulletConfig>().FromInstance(bulletConfig).AsSingle().NonLazy();
         Container.Bind<WeaponComponent>().FromInstance(weaponComponent).AsSingle().NonLazy();
         Container.Bind<GameManager>().FromInstance(gameManager).AsSingle().NonLazy();
+        Container.Bind<HitPointsComponent>().FromInstance(characterHitsComponent).AsSingle().NonLazy();
         Container.Bind<CharacterAttackComponent>().AsSingle().NonLazy();
-        //Container.Bind<CharacterDeathObserver>().AsSingle().NonLazy();
+        Container.BindInterfacesTo<CharacterDeathObserver>().AsSingle().NonLazy();
 
         Container.BindInterfacesTo<CharacterAttackController>().AsSingle().NonLazy();
 
