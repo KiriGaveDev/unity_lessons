@@ -2,7 +2,7 @@ using ShootEmUp;
 using UnityEngine;
 using Zenject;
 
-public class CharacterAttackComponent
+public class CharacterAttackAgent
 {
     private WeaponComponent weaponComponent;
     private BulletSystem bulletSystem;
@@ -10,7 +10,7 @@ public class CharacterAttackComponent
 
 
     [Inject]
-    public CharacterAttackComponent(WeaponComponent weaponComponent, BulletSystem bulletSystem, BulletConfig bulletConfig)
+    public CharacterAttackAgent(WeaponComponent weaponComponent, BulletSystem bulletSystem, BulletConfig bulletConfig)
     {
         this.weaponComponent = weaponComponent;
         this.bulletSystem = bulletSystem;

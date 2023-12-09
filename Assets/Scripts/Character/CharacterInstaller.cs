@@ -1,3 +1,4 @@
+using Character;
 using ShootEmUp;
 using UnityEngine;
 using Zenject;
@@ -25,7 +26,7 @@ public class CharacterInstaller : MonoInstaller
         Container.Bind<WeaponComponent>().FromInstance(weaponComponent).AsSingle().NonLazy();
         Container.Bind<HitPointsComponent>().FromInstance(characterHitsComponent).AsSingle().NonLazy();
         Container.Bind<MoveComponent>().FromInstance(characterMoveComponent).AsSingle().NonLazy();
-        Container.Bind<CharacterAttackComponent>().AsSingle().NonLazy();
+        Container.Bind<CharacterAttackAgent>().AsSingle().NonLazy();
 
         Container.BindInterfacesTo<CharacterDeathObserver>().AsSingle().NonLazy();
         Container.BindInterfacesTo<CharacterMoveController>().AsSingle().NonLazy();
