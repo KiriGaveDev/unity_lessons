@@ -1,10 +1,21 @@
 using ShootEmUp;
+using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class GameManagerInstaller : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GameObject[] rootListenerObjects;
+
+    private List<GameListener.IGameListener> _diGameListeners = new();
+
+
+    [Inject]
+    public void Construct(List<GameListener.IGameListener> gameListeners)
+    {        
+        _diGameListeners = gameListeners;
+    }
 
 
     private void Awake()
@@ -18,6 +29,12 @@ public class GameManagerInstaller : MonoBehaviour
                 gameManager.AddListener(listener);
             }
         }
-     
+
+
+        for(int i = 0; i < _diGameListeners.Count; i++)
+        {
+            gameManager.AddListener(_diGameListeners[i]);
+        }
+
     }
 }

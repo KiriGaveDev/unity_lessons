@@ -12,9 +12,13 @@ public class CharacterInstaller : MonoInstaller
     [SerializeField] private GameManager gameManager;
 
 
+
+
     public override void InstallBindings()
     {
         Container.Bind<GameManager>().FromInstance(gameManager).AsSingle().NonLazy();
+
+       // Container.Bind<GameManagerInstaller>().FromComponentInHierarchy().AsSingle().NonLazy();
 
         Container.Bind<BulletConfig>().FromInstance(bulletConfig).AsSingle().NonLazy();
 

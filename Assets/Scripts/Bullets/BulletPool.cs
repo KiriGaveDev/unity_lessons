@@ -1,3 +1,4 @@
+using Level;
 using ShootEmUp;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,17 +10,22 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener, IFixed
 
     [SerializeField] private Transform container;
     [SerializeField] private Bullet prefab;
-    [SerializeField] private LevelBounds levelBounds;
+    private LevelBounds _levelBounds;
 
     [SerializeField] private Transform worldTransform;
 
     public readonly Queue<Bullet> bulletPool = new();
     public readonly HashSet<Bullet> activeBullets = new();
     public readonly List<Bullet> cache = new();
-    
+
 
     private bool isActiveState = false;
 
+
+    public void Construct(LevelBounds levelBounds)
+    {
+        _levelBounds = levelBounds;
+    }
 
     private void Awake()
     {
@@ -29,7 +35,7 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener, IFixed
             bulletPool.Enqueue(bullet);
         }
     }
-        
+
 
     public Bullet GetBullet()
     {
@@ -49,7 +55,7 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener, IFixed
     public void RemoveBullet(Bullet bullet)
     {
         if (activeBullets.Remove(bullet))
-        {           
+        {
             bullet.transform.SetParent(container);
             bulletPool.Enqueue(bullet);
         }
@@ -69,7 +75,7 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener, IFixed
         for (int i = 0, count = cache.Count; i < count; i++)
         {
             var bullet = cache[i];
-            if (!levelBounds.InBounds(bullet.transform.position))
+            if (!_levelBounds.InBounds(bullet.transform.position))
             {
                 RemoveBullet(bullet);
             }
@@ -92,5 +98,5 @@ public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener, IFixed
         {
             bullet.ResumeMove();
         }
-    }   
+    }
 }

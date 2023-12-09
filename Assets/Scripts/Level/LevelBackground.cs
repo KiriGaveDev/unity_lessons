@@ -5,7 +5,7 @@ using static GameListener;
 namespace ShootEmUp
 {
  
-    public sealed class LevelBackground : MonoBehaviour, IFixedUpdateListener
+    public sealed class LevelBackground : IFixedUpdateListener
     {
         [Serializable]
         public sealed class Params
@@ -15,39 +15,38 @@ namespace ShootEmUp
             public float movingSpeedY;
         }
 
-        [SerializeField] private Params parameters;
+      
+        private float _startPositionY;
+        private float _endPositionY;
+        private float _movingSpeedY;
+        private float _positionX;
+        private float _positionZ;
 
-        private float startPositionY;
-        private float endPositionY;
-        private float movingSpeedY;
-        private float positionX;
-        private float positionZ;
-
-        private Transform myTransform;
+        private Transform _background;
 
       
 
-        private void Awake()
+        public LevelBackground(Params parameters, Transform backGround)
         {
-            startPositionY = parameters.startPositionY;
-            endPositionY = parameters.endPositionY;
-            movingSpeedY = parameters.movingSpeedY;
-            myTransform = transform; 
+            _startPositionY = parameters.startPositionY;
+            _endPositionY = parameters.endPositionY;
+            _movingSpeedY = parameters.movingSpeedY;
+            _background = backGround;
 
-            var position = myTransform.position;
-            positionX = position.x;
-            positionZ = position.z;
+            Vector3 position = _background.position;
+            _positionX = position.x;
+            _positionZ = position.z;
         }
               
 
         public void OnFixedUpdate(float fixedDeltaTime)
         {
-            if (myTransform.position.y <= endPositionY)
+            if (_background.position.y <=   _endPositionY)
             {
-                myTransform.position = new Vector3(positionX, startPositionY, positionZ);
+                _background.position = new Vector3(_positionX,  _startPositionY, _positionZ);
             }
 
-            myTransform.position -= new Vector3(positionX, movingSpeedY * Time.fixedDeltaTime, positionZ);
+            _background.position -= new Vector3(_positionX, _movingSpeedY * Time.fixedDeltaTime, _positionZ);
         }
     }
 }
