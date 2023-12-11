@@ -1,46 +1,54 @@
+using Game;
+using Game_Input;
+using ShootEmUp;
+using System;
 using UnityEngine;
-using static GameListener;
+using Zenject;
 
-namespace ShootEmUp
+
+namespace Character
 {
-    public sealed class CharacterMoveController :         
-        IFixedUpdateListener,
-        IUpdateListener
+    public sealed class CharacterMoveController :IDisposable, IStartListener, IFinishListener , IFixedUpdateListener 
+    { 
 
-    {
-
-        private MoveComponent characterMoveComponent;
-
-        private float horizontalDirection;
+        private readonly MoveComponent _characterMoveComponent;       
+        private readonly IInputService _inputService;
+        private Vector2 _direction;
 
 
-        public CharacterMoveController(MoveComponent characterMoveComponent, GameManager gameManager)
+        [Inject]
+        public CharacterMoveController(IInputService inputService, MoveComponent characterMoveComponent, GameManager gameManager)
         {
-            this.characterMoveComponent = characterMoveComponent;
+            _characterMoveComponent = characterMoveComponent;
             gameManager.AddListener(this);
+            _inputService = inputService;
         }
 
 
         public void OnFixedUpdate(float fixedDeltaTime)
         {
-            characterMoveComponent.Move(new Vector2(horizontalDirection, 0) * fixedDeltaTime);
+            _characterMoveComponent.Move(new Vector2(_direction.x, 0) * fixedDeltaTime);
+        }
+        
+
+        public void Dispose()
+        {
+            _inputService.OnMove -= OnMove;
         }
 
-
-        public void OnUpdate(float deltaTime)
+        public void OnStart()
         {
-            if (Input.GetKey(KeyCode.A))
-            {
-                horizontalDirection = -1;
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                horizontalDirection = 1;
-            }
-            else
-            {
-                horizontalDirection = 0;
-            }
-        }        
+            _inputService.OnMove += OnMove;
+        }
+
+        private void OnMove(Vector2 moveDirection)
+        {
+           _direction = moveDirection;
+        }
+
+        public void OnFinish()
+        {
+            _inputService.OnMove -= OnMove;
+        }
     }
 }

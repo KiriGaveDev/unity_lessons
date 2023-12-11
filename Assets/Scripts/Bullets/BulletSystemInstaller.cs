@@ -1,14 +1,25 @@
-using ShootEmUp;
 using UnityEngine;
 using Zenject;
 
-public class BulletSystemInstaller : MonoInstaller
-{
-    [SerializeField] private BulletPool bulletPool;
 
-    public override void InstallBindings()
+namespace Bullets
+{
+    public class BulletSystemInstaller : MonoInstaller
     {
-        Container.Bind<BulletPool>().FromInstance(bulletPool).AsSingle().NonLazy();
-        Container.Bind<BulletSystem>().AsSingle().NonLazy();
+        [Header("References")]
+        [SerializeField] private Bullet prefab;
+        [SerializeField] private Transform container;
+        [SerializeField] private Transform worldTransform;
+        [Header("Setting")]
+        [SerializeField] private int initialCount;
+
+
+        public override void InstallBindings()
+        {
+            Container.BindInterfacesAndSelfTo<BulletPool>().AsSingle().WithArguments(prefab, container, worldTransform, initialCount);
+            Container.Bind<BulletSystem>().AsSingle().NonLazy();
+        }
     }
 }
+
+

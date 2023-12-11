@@ -1,5 +1,3 @@
-public class GameListener
-{
     public interface IGameListener
     {
 
@@ -46,4 +44,3 @@ public class GameListener
         public void OnLateUpdate(float deltaTime);
     }
 
-}

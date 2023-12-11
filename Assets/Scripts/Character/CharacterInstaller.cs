@@ -1,36 +1,27 @@
-using Character;
+using Bullets;
 using ShootEmUp;
 using UnityEngine;
 using Zenject;
 
-public class CharacterInstaller : MonoInstaller
+namespace Character
 {
-    [SerializeField] private WeaponComponent weaponComponent;
-    [SerializeField] private MoveComponent characterMoveComponent;
-    [SerializeField] private HitPointsComponent characterHitsComponent;
-
-    [SerializeField] private BulletConfig bulletConfig;
-    [SerializeField] private GameManager gameManager;
-
-
-
-
-    public override void InstallBindings()
+    public class CharacterInstaller : MonoInstaller
     {
-        Container.Bind<GameManager>().FromInstance(gameManager).AsSingle().NonLazy();
+        [SerializeField] private WeaponComponent weaponComponent;
+        [SerializeField] private MoveComponent characterMoveComponent;
+        [SerializeField] private HitPointsComponent characterHitsComponent;
 
-       // Container.Bind<GameManagerInstaller>().FromComponentInHierarchy().AsSingle().NonLazy();
+        [SerializeField] private BulletConfig bulletConfig;
 
-        Container.Bind<BulletConfig>().FromInstance(bulletConfig).AsSingle().NonLazy();
 
-        Container.Bind<WeaponComponent>().FromInstance(weaponComponent).AsSingle().NonLazy();
-        Container.Bind<HitPointsComponent>().FromInstance(characterHitsComponent).AsSingle().NonLazy();
-        Container.Bind<MoveComponent>().FromInstance(characterMoveComponent).AsSingle().NonLazy();
-        Container.Bind<CharacterAttackAgent>().AsSingle().NonLazy();
+        public override void InstallBindings()
+        {         
+            Container.Bind<CharacterAttackAgent>().AsSingle().WithArguments(weaponComponent, bulletConfig).NonLazy();
 
-        Container.BindInterfacesTo<CharacterDeathObserver>().AsSingle().NonLazy();
-        Container.BindInterfacesTo<CharacterMoveController>().AsSingle().NonLazy();
-        Container.BindInterfacesTo<CharacterAttackController>().AsSingle().NonLazy();
-
+            Container.BindInterfacesTo<CharacterDeathObserver>().AsSingle().WithArguments(characterHitsComponent).NonLazy();
+            Container.BindInterfacesTo<CharacterMoveController>().AsSingle().WithArguments(characterMoveComponent).NonLazy();
+            Container.BindInterfacesTo<CharacterAttackController>().AsSingle().NonLazy();
+        }
     }
+
 }

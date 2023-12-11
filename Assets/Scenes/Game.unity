@@ -225,7 +225,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 363245576}
-  - component: {fileID: 363245578}
   m_Layer: 0
   m_Name: BulletSystem
   m_TagString: Untagged
@@ -249,22 +248,6 @@ Transform:
   m_Father: {fileID: 3951702117947426122}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &363245578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 363245575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5544aa9b4db97c842b6fdf9b31cc1802, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialCount: 50
-  container: {fileID: 1831741369}
-  prefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
-  worldTransform: {fileID: 1683128698}
 --- !u!1 &397097590
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +292,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc5a75fe4b6e5b438883a83a16246b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPool: {fileID: 363245578}
+  prefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
+  container: {fileID: 1831741369}
+  worldTransform: {fileID: 1683128698}
+  initialCount: 50
 --- !u!1 &424915559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2037,7 +2023,6 @@ MonoBehaviour:
   characterMoveComponent: {fileID: 4414282821800802398}
   characterHitsComponent: {fileID: 4414282821800802402}
   bulletConfig: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}
-  gameManager: {fileID: 3951702117947426123}
 --- !u!1 &2100292136
 GameObject:
   m_ObjectHideFlags: 0
@@ -2583,6 +2568,8 @@ GameObject:
   - component: {fileID: 3951702117947426123}
   - component: {fileID: 3951702117947426124}
   - component: {fileID: 3951702117947426126}
+  - component: {fileID: 3951702117947426127}
+  - component: {fileID: 3951702117947426128}
   m_Layer: 0
   m_Name: '[GAME_SYSTEM]'
   m_TagString: Untagged
@@ -2662,6 +2649,8 @@ MonoBehaviour:
   - {fileID: 2053607596}
   - {fileID: 1357911486}
   - {fileID: 2100292138}
+  - {fileID: 3951702117947426127}
+  - {fileID: 3951702117947426128}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -2679,6 +2668,31 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
+--- !u!114 &3951702117947426127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3951702117947426121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd59456df095c246a1c38a8a701debf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 3951702117947426123}
+--- !u!114 &3951702117947426128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3951702117947426121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3cfb8a045cae249835b6488c97cbeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &4162873433806880330
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game_Input
 {
-    public class KeyboardInput : IInputService, GameListener.IUpdateListener
+    public class KeyboardInput : IInputService, IUpdateListener
     {
         public event Action OnFire;
         public event Action<Vector2> OnMove;

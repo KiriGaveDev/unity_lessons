@@ -1,15 +1,17 @@
 using Game_Input;
 using System;
-
+using Zenject;
 
 namespace Character
 {
-    public class CharacterAttackController : IDisposable, GameListener.IStartListener, GameListener.IFinishListener
+    public class CharacterAttackController : IDisposable, IStartListener, IFinishListener
     {
-        private readonly CharacterAttackAgent _characterAttackAgent;
         private readonly IInputService _inputService;
+        private readonly CharacterAttackAgent _characterAttackAgent;
 
-        public CharacterAttackController(CharacterAttackAgent characterAttackComponent, IInputService inputService)
+
+        [Inject]
+        public CharacterAttackController(IInputService inputService, CharacterAttackAgent characterAttackComponent)
         {
             _inputService = inputService;
             _characterAttackAgent = characterAttackComponent;

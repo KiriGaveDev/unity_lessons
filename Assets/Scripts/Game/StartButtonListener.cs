@@ -2,30 +2,35 @@ using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartButtonListener : MonoBehaviour
+
+namespace Game
 {
-    [SerializeField] private Button startButton;
-    [SerializeField] private UiCountdownTimer timer;
-    [SerializeField] private int time;
-
-
-    private void Awake()
+    public class StartButtonListener : MonoBehaviour
     {
-        startButton.onClick.AddListener(StartButton_OnClick);
-    }
+        [SerializeField] private Button startButton;
+        [SerializeField] private UiCountdownTimer timer;
+        [SerializeField] private int time;
 
 
-    private void StartButton_OnClick()
-    {
-        StartGame();
-    }
+        private void Awake()
+        {
+            startButton.onClick.AddListener(StartButton_OnClick);
+        }
 
-   
-    public void StartGame()
-    {
-        timer.gameObject.SetActive(true);
-        timer.StartTimer(time);
 
-        startButton.gameObject.SetActive(false);
+        private void StartButton_OnClick()
+        {
+            StartGame();
+        }
+
+
+        public void StartGame()
+        {
+            timer.gameObject.SetActive(true);
+            timer.StartTimer(time);
+
+            startButton.gameObject.SetActive(false);
+        }
     }
 }
+

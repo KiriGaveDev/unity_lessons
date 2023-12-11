@@ -1,102 +1,116 @@
 using Level;
-using ShootEmUp;
 using System.Collections.Generic;
 using UnityEngine;
-using static GameListener;
+using Zenject;
 
-public class BulletPool : MonoBehaviour, IPauseListener, IResumeListener, IFixedUpdateListener
+
+namespace Bullets
 {
-    [SerializeField] private int initialCount = 50;
-
-    [SerializeField] private Transform container;
-    [SerializeField] private Bullet prefab;
-    private LevelBounds _levelBounds;
-
-    [SerializeField] private Transform worldTransform;
-
-    public readonly Queue<Bullet> bulletPool = new();
-    public readonly HashSet<Bullet> activeBullets = new();
-    public readonly List<Bullet> cache = new();
-
-
-    private bool isActiveState = false;
-
-
-    public void Construct(LevelBounds levelBounds)
+    public class BulletPool : IPauseListener, IResumeListener, IFixedUpdateListener
     {
-        _levelBounds = levelBounds;
-    }
+        private readonly Bullet _prefab;
+        private readonly Transform _container;
 
-    private void Awake()
-    {
-        for (var i = 0; i < initialCount; i++)
+        private readonly Transform _worldTransform;
+
+        private readonly int _initialCount = 50;
+                
+
+        private readonly Queue<Bullet> _bulletPool = new();
+        private readonly HashSet<Bullet> _activeBullets = new();
+        private readonly List<Bullet> _cache = new();
+
+        private readonly LevelBounds _levelBounds;
+
+
+        [Inject]
+        public BulletPool(LevelBounds levelBounds, Bullet prefab, Transform container, Transform worldTransform, int initialCount)
         {
-            var bullet = Instantiate(prefab, container);
-            bulletPool.Enqueue(bullet);
-        }
-    }
+            _levelBounds = levelBounds;
+            _prefab = prefab;
+            _container = container;
+            _worldTransform = worldTransform;
+            _initialCount = initialCount;
 
-
-    public Bullet GetBullet()
-    {
-        if (bulletPool.TryDequeue(out var bullet))
-        {
-            bullet.transform.SetParent(worldTransform);
-        }
-        else
-        {
-            bullet = Instantiate(prefab, worldTransform);
-        }
-
-        return bullet;
-    }
-
-
-    public void RemoveBullet(Bullet bullet)
-    {
-        if (activeBullets.Remove(bullet))
-        {
-            bullet.transform.SetParent(container);
-            bulletPool.Enqueue(bullet);
-        }
-    }
-
-
-    public void OnFixedUpdate(float fixedDeltaTime)
-    {
-        if (!isActiveState)
-        {
-            return;
-        }
-
-        cache.Clear();
-        cache.AddRange(activeBullets);
-
-        for (int i = 0, count = cache.Count; i < count; i++)
-        {
-            var bullet = cache[i];
-            if (!_levelBounds.InBounds(bullet.transform.position))
+            for (var i = 0; i < _initialCount; i++)
             {
-                RemoveBullet(bullet);
+                var bullet = Object.Instantiate(_prefab, container);
+                _bulletPool.Enqueue(bullet);
+            }
+        }
+
+      
+        public Bullet GetBullet()
+        {
+            if (_bulletPool.TryDequeue(out var bullet))
+            {
+                bullet.transform.SetParent(_worldTransform);
+            }
+            else
+            {
+                bullet = Object.Instantiate(_prefab, _worldTransform);
+            }
+
+            _activeBullets.Add(bullet);
+            return bullet;
+        }
+
+
+        public bool TryRemoveBullet(Bullet bullet)
+        {
+            if (_activeBullets.Remove(bullet))
+            {
+                bullet.transform.SetParent(_container);
+                _bulletPool.Enqueue(bullet);
+                return true;
+            }
+
+            return false;
+        }
+
+
+        public void RemoveBullet(Bullet bullet)
+        {
+            if (_activeBullets.Remove(bullet))
+            {
+                bullet.transform.SetParent(_container);
+                _bulletPool.Enqueue(bullet);
+            }
+        }
+
+
+        public void OnFixedUpdate(float fixedDeltaTime)
+        {
+            _cache.Clear();
+            _cache.AddRange(_activeBullets);
+
+            for (int i = 0, count = _cache.Count; i < count; i++)
+            {
+                var bullet = _cache[i];
+                if (!_levelBounds.InBounds(bullet.transform.position))
+                {
+                    TryRemoveBullet(bullet);
+                }
+            }
+        }
+
+
+        public void OnPause()
+        {
+            foreach (var bullet in _activeBullets)
+            {
+                bullet.PauseMove();
+            }
+        }
+
+
+        public void OnResume()
+        {
+            foreach (var bullet in _activeBullets)
+            {
+                bullet.ResumeMove();
             }
         }
     }
-
-
-    public void OnPause()
-    {
-        foreach (var bullet in activeBullets)
-        {
-            bullet.PauseMove();
-        }
-    }
-
-
-    public void OnResume()
-    {
-        foreach (var bullet in activeBullets)
-        {
-            bullet.ResumeMove();
-        }
-    }
 }
+

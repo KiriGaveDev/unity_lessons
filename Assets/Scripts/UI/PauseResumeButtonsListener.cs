@@ -1,13 +1,11 @@
-using ShootEmUp;
+using Game;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 namespace UI
 {
-    public class PauseResumeButtonsListener : MonoBehaviour,
-        GameListener.IStartListener,
-        GameListener.IFinishListener
+    public class PauseResumeButtonsListener : MonoBehaviour, IStartListener, IFinishListener
     {
 
         [SerializeField] private GameManager gameManager;

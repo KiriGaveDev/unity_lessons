@@ -5,10 +5,10 @@ using UnityEngine.UI;
 namespace UI
 {
     public class PauseResumeButtonStateController : MonoBehaviour,
-    GameListener.IStartListener,
-    GameListener.IPauseListener,
-    GameListener.IResumeListener,
-    GameListener.IFinishListener
+       IStartListener,
+       IPauseListener,
+       IResumeListener,
+       IFinishListener
     {
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button pauseButton;

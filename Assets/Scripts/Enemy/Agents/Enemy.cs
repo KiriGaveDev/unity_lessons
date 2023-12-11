@@ -1,20 +1,25 @@
+using Bullets;
 using ShootEmUp;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace Enemies.Agents
 {
-    [SerializeField] private HitPointsComponent hitPointsComponent;
-    [SerializeField] private EnemyAttackAgent enemyAttackAgent;
-    [SerializeField] private EnemyMoveAgent enemyMoveAgent;
-
-    public HitPointsComponent HitPointsComponent => hitPointsComponent;
-    public EnemyAttackAgent EnemyAttackAgent => enemyAttackAgent;  
-    public EnemyMoveAgent EnemyMoveAgent => enemyMoveAgent;
-
-
-    public void InitEnemyAttack(BulletSystem bulletSystem, Transform character)
+    public class Enemy : MonoBehaviour
     {
-        EnemyAttackAgent.Init(bulletSystem, character);    
-    }  
+        [SerializeField] private HitPointsComponent hitPointsComponent;
+        [SerializeField] private EnemyAttackAgent enemyAttackAgent;
+        [SerializeField] private EnemyMoveAgent enemyMoveAgent;
+
+        public HitPointsComponent HitPointsComponent => hitPointsComponent;
+        public EnemyAttackAgent EnemyAttackAgent => enemyAttackAgent;
+        public EnemyMoveAgent EnemyMoveAgent => enemyMoveAgent;
+
+
+        public void InitEnemyAttack(BulletSystem bulletSystem, Transform character)
+        {
+            EnemyAttackAgent.Init(bulletSystem, character);
+        }
+
+    }
 
 }

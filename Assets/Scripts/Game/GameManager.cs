@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShootEmUp
+namespace Game
 {
     public sealed class GameManager : MonoBehaviour
     {
@@ -15,11 +15,11 @@ namespace ShootEmUp
 
         private GameState currentGameState;
 
-        private List<GameListener.IGameListener> gameListeners = new ();
+        private readonly List<IGameListener> gameListeners = new ();
         
-        private List<GameListener.IUpdateListener> updateListeners = new ();
-        private List<GameListener.IFixedUpdateListener> fixedUpdateListeners = new ();
-        private List<GameListener.ILateUpdateListener> lateUpdateListeners = new ();
+        private readonly List<IUpdateListener> updateListeners = new ();
+        private readonly List<IFixedUpdateListener> fixedUpdateListeners = new ();
+        private readonly List<ILateUpdateListener> lateUpdateListeners = new ();
 
 
         private void Update()
@@ -64,62 +64,48 @@ namespace ShootEmUp
         }
 
 
-        public void AddListener(GameListener.IGameListener listener)
+        public void AddListener(IGameListener listener)
         {
             gameListeners.Add(listener);
 
-            if (listener is GameListener.IUpdateListener updateListener)
+            if (listener is IUpdateListener updateListener)
             {
                 updateListeners.Add(updateListener);
             }
 
-            if (listener is GameListener.IFixedUpdateListener fixedUpdateListener)
+            if (listener is IFixedUpdateListener fixedUpdateListener)
             {
                 fixedUpdateListeners.Add(fixedUpdateListener);
             }
 
-            if (listener is GameListener.ILateUpdateListener lateUpdateListener)
+            if (listener is ILateUpdateListener lateUpdateListener)
             {
                 lateUpdateListeners.Add(lateUpdateListener);
             }
         }
 
 
-        public void RemoveListener(GameListener.IGameListener listener)
+        public void RemoveListener(IGameListener listener)
         {
             gameListeners.Remove(listener);
 
-            if (listener is GameListener.IUpdateListener updateListener)
+            if (listener is IUpdateListener updateListener)
             {
                 updateListeners.Remove(updateListener);
             }
 
-            if (listener is GameListener.IFixedUpdateListener fixedUpdateListener)
+            if (listener is IFixedUpdateListener fixedUpdateListener)
             {
                 fixedUpdateListeners.Remove(fixedUpdateListener);
             }
 
-            if (listener is GameListener.ILateUpdateListener lateUpdateListener)
+            if (listener is ILateUpdateListener lateUpdateListener)
             {
                 lateUpdateListeners.Remove(lateUpdateListener);
             }
         }
 
-
-        public void FinishGame()
-        {
-            if(currentGameState == GameState.None || currentGameState == GameState.Finished)
-            {
-                return;
-            }
-
-            OnFinished();
-
-            Debug.Log("Game over!");
-            Time.timeScale = 0;
-        }
-
-
+       
         public void OnStart()
         {
             if(currentGameState != GameState.None)
@@ -129,7 +115,7 @@ namespace ShootEmUp
 
             foreach (var gameListener in gameListeners)
             {
-                if(gameListener is GameListener.IStartListener startListener)
+                if(gameListener is IStartListener startListener)
                 {
                     startListener.OnStart();
                 }
@@ -147,7 +133,7 @@ namespace ShootEmUp
 
             foreach (var gameListener in gameListeners)
             {
-                if (gameListener is GameListener.IPauseListener pauseListener)
+                if (gameListener is IPauseListener pauseListener)
                 {
                     pauseListener.OnPause();
                 }
@@ -166,7 +152,7 @@ namespace ShootEmUp
 
             foreach (var gameListener in gameListeners)
             {
-                if (gameListener is GameListener.IResumeListener resumeListener)
+                if (gameListener is IResumeListener resumeListener)
                 {
                     resumeListener.OnResume();
                 }
@@ -178,15 +164,23 @@ namespace ShootEmUp
 
         public void OnFinished()
         {
-            foreach (var gameListener in gameListeners)
+            if (currentGameState is GameState.None or GameState.Finished)
             {
-                if (gameListener is GameListener.IFinishListener resumeListener)
-                {
+                return;
+            }
+
+            foreach (var gameListener in gameListeners)
+            {   
+                if (gameListener is IFinishListener resumeListener)
+                {   
                     resumeListener.OnFinish();
                 }
             }
+          
+            Debug.Log("Game over!");
+            Time.timeScale = 0;
 
-            currentGameState= GameState.Finished;
+            currentGameState = GameState.Finished;
         }
     }
 }

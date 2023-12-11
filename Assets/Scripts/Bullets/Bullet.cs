@@ -1,7 +1,8 @@
+using ShootEmUp;
 using System;
 using UnityEngine;
 
-namespace ShootEmUp
+namespace Bullets
 {
     public sealed class Bullet : MonoBehaviour
     {
@@ -17,6 +18,21 @@ namespace ShootEmUp
         private void OnCollisionEnter2D(Collision2D collision)
         {
             OnCollisionEntered?.Invoke(this, collision);
+
+            if (!collision.gameObject.TryGetComponent(out TeamComponent team))
+            {
+                return;
+            }
+
+            if (isPlayer == team.IsPlayer)
+            {
+                return;
+            }
+
+            if (collision.gameObject.TryGetComponent(out HitPointsComponent hitPoints))
+            {
+                hitPoints.TakeDamage(damage);
+            }
         }
 
 

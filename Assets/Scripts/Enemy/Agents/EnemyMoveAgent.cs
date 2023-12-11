@@ -1,7 +1,8 @@
+using ShootEmUp;
 using UnityEngine;
-using static GameListener;
 
-namespace ShootEmUp
+
+namespace Enemies.Agents
 {
     public sealed class EnemyMoveAgent : MonoBehaviour, IFixedUpdateListener
     {
@@ -36,7 +37,7 @@ namespace ShootEmUp
                 return;
             }
 
-            var direction = vector.normalized * Time.fixedDeltaTime;
+            var direction = vector.normalized * fixedDeltaTime;
             moveComponent.Move(direction);
         }       
     }

@@ -1,22 +1,21 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShootEmUp
+namespace Bullets
 {
-    public sealed class BulletSystem 
-    {   
-        private BulletPool bulletPool;        
+    public sealed class BulletSystem
+    {
+        private readonly BulletPool _bulletPool;
 
 
         public BulletSystem(BulletPool bulletPool)
-        { 
-            this.bulletPool = bulletPool;
+        {
+            _bulletPool = bulletPool;
         }
 
-        
+
         public void FlyBulletByArgs(Args args)
         {
-            Bullet bullet = bulletPool.GetBullet();
+            Bullet bullet = _bulletPool.GetBullet();
 
             bullet.SetPosition(args.position);
             bullet.SetColor(args.color);
@@ -24,42 +23,18 @@ namespace ShootEmUp
             bullet.damage = args.damage;
             bullet.isPlayer = args.isPlayer;
             bullet.SetVelocity(args.velocity);
-            
-            if (bulletPool.activeBullets.Add(bullet))
-            {
-                bullet.OnCollisionEntered += this.OnBulletCollision;
-            }
+
+            bullet.OnCollisionEntered += OnBulletCollision;
         }
 
-        
+
         private void OnBulletCollision(Bullet bullet, Collision2D collision)
         {
-            bullet.OnCollisionEntered -= this.OnBulletCollision;
-            DealDamage(bullet, collision.gameObject);
-            bulletPool.RemoveBullet(bullet);
-        }   
-
-
-        private void DealDamage(Bullet bullet, GameObject other)
-        {
-            if (!other.TryGetComponent(out TeamComponent team))
-            {
-                return;
-            }
-
-            if (bullet.isPlayer == team.IsPlayer)
-            {
-                return;
-            }
-
-            if (other.TryGetComponent(out HitPointsComponent hitPoints))
-            {
-                hitPoints.TakeDamage(bullet.damage);
-            }
+            bullet.OnCollisionEntered -= OnBulletCollision;
+            _bulletPool.RemoveBullet(bullet);
         }
-               
 
-        
+
         public struct Args
         {
             public Vector2 position;

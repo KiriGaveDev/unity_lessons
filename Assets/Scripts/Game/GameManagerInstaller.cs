@@ -3,38 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class GameManagerInstaller : MonoBehaviour
+
+namespace Game
 {
-    [SerializeField] private GameManager gameManager;
-    [SerializeField] private GameObject[] rootListenerObjects;
-
-    private List<GameListener.IGameListener> _diGameListeners = new();
-
-
-    [Inject]
-    public void Construct(List<GameListener.IGameListener> gameListeners)
-    {        
-        _diGameListeners = gameListeners;
-    }
-
-
-    private void Awake()
+    public class GameManagerInstaller : MonoBehaviour
     {
-        foreach (GameObject rootObject in rootListenerObjects)
-        {
-            var listeners = rootObject.GetComponentsInChildren<GameListener.IGameListener>();
+        [SerializeField] private GameManager gameManager;
+        [SerializeField] private GameObject[] rootListenerObjects;
 
-            foreach (var listener in listeners)
+        private List<IGameListener> _diGameListeners = new();
+
+
+        [Inject]
+        public void Construct(List<IGameListener> gameListeners)
+        {
+            _diGameListeners = gameListeners;
+        }
+
+
+        private void Awake()
+        {
+            foreach (GameObject rootObject in rootListenerObjects)
             {
-                gameManager.AddListener(listener);
+                var listeners = rootObject.GetComponentsInChildren<IGameListener>();
+
+                foreach (var listener in listeners)
+                {
+                    gameManager.AddListener(listener);
+                }
             }
+
+
+            for (int i = 0; i < _diGameListeners.Count; i++)
+            {
+                gameManager.AddListener(_diGameListeners[i]);
+            }
+
         }
-
-
-        for(int i = 0; i < _diGameListeners.Count; i++)
-        {
-            gameManager.AddListener(_diGameListeners[i]);
-        }
-
     }
 }
+

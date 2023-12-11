@@ -1,7 +1,9 @@
+using Bullets;
+using ShootEmUp;
 using UnityEngine;
-using static GameListener;
 
-namespace ShootEmUp
+
+namespace Enemies.Agents
 {
     public sealed class EnemyAttackAgent : MonoBehaviour, IFixedUpdateListener
     {

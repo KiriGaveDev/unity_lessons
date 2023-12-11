@@ -1,11 +1,15 @@
-using Game_Input;
 using Zenject;
 
-public class GameInputInstaller : MonoInstaller
+
+namespace Game_Input
 {
-    public override void InstallBindings()
+    public class GameInputInstaller : MonoInstaller
     {
-        IInputService inputService = new KeyboardInput();
-        Container.BindInterfacesAndSelfTo<IInputService>().FromInstance(inputService).AsSingle().NonLazy();
+        public override void InstallBindings()
+        {
+            IInputService inputService = new KeyboardInput();
+            Container.BindInterfacesAndSelfTo<IInputService>().FromInstance(inputService).AsSingle().NonLazy();
+        }
     }
 }
+

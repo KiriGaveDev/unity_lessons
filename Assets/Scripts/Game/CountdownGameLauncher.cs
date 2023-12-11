@@ -1,22 +1,25 @@
-using ShootEmUp;
 using UI;
 using UnityEngine;
 
 
-public class CountdownGameLauncher : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private GameManager gameManager;
-    [SerializeField] private UiCountdownTimer uiTimer;
-
-    private void Awake()
+    public class CountdownGameLauncher : MonoBehaviour
     {
-        uiTimer.OnCompleted += UiTimer_OnCompleted;
-    }
+        [SerializeField] private GameManager gameManager;
+        [SerializeField] private UiCountdownTimer uiTimer;
+
+        private void Awake()
+        {
+            uiTimer.OnCompleted += UiTimer_OnCompleted;
+        }
 
 
-    private void UiTimer_OnCompleted()
-    {
-        gameManager.OnStart();
-        uiTimer.OnCompleted -= UiTimer_OnCompleted;
+        private void UiTimer_OnCompleted()
+        {
+            gameManager.OnStart();
+            uiTimer.OnCompleted -= UiTimer_OnCompleted;
+        }
     }
 }
+

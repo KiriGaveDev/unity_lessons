@@ -1,10 +1,8 @@
 using System;
 using UnityEngine;
-using static GameListener;
 
-namespace ShootEmUp
-{
- 
+namespace Level
+{ 
     public sealed class LevelBackground : IFixedUpdateListener
     {
         [Serializable]
@@ -16,13 +14,13 @@ namespace ShootEmUp
         }
 
       
-        private float _startPositionY;
-        private float _endPositionY;
-        private float _movingSpeedY;
-        private float _positionX;
-        private float _positionZ;
+        private readonly float _startPositionY;
+        private readonly float _endPositionY;
+        private readonly float _movingSpeedY;
+        private readonly float _positionX;
+        private readonly float _positionZ;
 
-        private Transform _background;
+        private readonly Transform _background;
 
       
 

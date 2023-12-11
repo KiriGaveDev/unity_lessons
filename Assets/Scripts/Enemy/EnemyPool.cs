@@ -1,8 +1,10 @@
+using Bullets;
+using Enemies.Agents;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace ShootEmUp
+namespace Enemies
 {
     public sealed class EnemyPool : MonoBehaviour
     {
@@ -11,7 +13,7 @@ namespace ShootEmUp
         [SerializeField] private EnemyPositions enemyPositions;
         [SerializeField] private Transform character;
 
-        private BulletSystem bulletSystem;
+        private BulletSystem _bulletSystem;
 
         [SerializeField] private Transform worldTransform;
 
@@ -26,23 +28,27 @@ namespace ShootEmUp
         [Inject]
         private void Construct(BulletSystem bulletSystem)
         {
-            this.bulletSystem = bulletSystem;
+            _bulletSystem = bulletSystem;
         }
 
         private void Awake()
         {
             for (var i = 0; i <= enemyCount; i++)
             {
-                var enemy = Instantiate(this.prefab, this.container);
-                enemy.InitEnemyAttack(this.bulletSystem, this.character);             
-                this.enemyPool.Enqueue(enemy);
+                var enemy = Instantiate(prefab, container);
+                enemy.InitEnemyAttack(_bulletSystem, character);             
+                enemyPool.Enqueue(enemy);
             }
         }
 
 
+        public bool TrySpawnEnemy(out Enemy enemy) => enemyPool.TryDequeue(out enemy);
+
+
+
         public Enemy SpawnEnemy()
         {
-            if (!this.enemyPool.TryDequeue(out var enemy))
+            if (!TrySpawnEnemy(out Enemy enemy))
             {
                 return null;
             }

@@ -1,12 +1,13 @@
+using Bullets;
 using ShootEmUp;
 using UnityEngine;
 using Zenject;
 
 public class CharacterAttackAgent
 {
-    private WeaponComponent weaponComponent;
-    private BulletSystem bulletSystem;
-    private BulletConfig bulletConfig;
+    private readonly WeaponComponent weaponComponent;
+    private readonly BulletSystem bulletSystem;
+    private readonly BulletConfig bulletConfig;
 
 
     [Inject]
