@@ -2,6 +2,7 @@ using Game_Input;
 using System;
 using Zenject;
 
+
 namespace Character
 {
     public class CharacterAttackController : IDisposable, IStartListener, IFinishListener
@@ -12,7 +13,7 @@ namespace Character
 
         [Inject]
         public CharacterAttackController(IInputService inputService, CharacterAttackAgent characterAttackComponent)
-        {
+        {          
             _inputService = inputService;
             _characterAttackAgent = characterAttackComponent;
         }
@@ -26,13 +27,13 @@ namespace Character
 
         public void OnFinish()
         {
-            _inputService.OnFire += Fire;
+            _inputService.OnFire -= Fire;
         }
 
 
         public void OnStart()
         {
-            _inputService.OnFire -= Fire;
+            _inputService.OnFire += Fire;
         }
 
 
