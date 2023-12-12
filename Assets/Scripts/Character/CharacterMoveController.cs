@@ -18,7 +18,7 @@ namespace Character
 
         [Inject]
         public CharacterMoveController(IInputService inputService, MoveComponent characterMoveComponent, GameManager gameManager)
-        {
+        {            
             _characterMoveComponent = characterMoveComponent;
             gameManager.AddListener(this);
             _inputService = inputService;
@@ -26,7 +26,7 @@ namespace Character
 
 
         public void OnFixedUpdate(float fixedDeltaTime)
-        {
+        {            
             _characterMoveComponent.Move(new Vector2(_direction.x, 0) * fixedDeltaTime);
         }
         
@@ -36,15 +36,18 @@ namespace Character
             _inputService.OnMove -= OnMove;
         }
 
+
         public void OnStart()
-        {
+        {          
             _inputService.OnMove += OnMove;
         }
+
 
         private void OnMove(Vector2 moveDirection)
         {
            _direction = moveDirection;
         }
+
 
         public void OnFinish()
         {

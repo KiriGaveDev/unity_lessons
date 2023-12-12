@@ -8,10 +8,12 @@ namespace Game
     public class GameInstaller : MonoInstaller
     {
         [SerializeField] private GameManager gameManager;
+        [SerializeField] private GameManagerInstaller managerInstaller;
 
         public override void InstallBindings()
         {
             Container.BindInstance(gameManager);
+            Container.BindInstance(managerInstaller);
         }
     }
 }

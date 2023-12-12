@@ -1490,7 +1490,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1357911485}
   - component: {fileID: 1357911486}
-  - component: {fileID: 1357911488}
   - component: {fileID: 1357911487}
   m_Layer: 0
   m_Name: EnemySystemInstaller
@@ -1527,7 +1526,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c092d4f960291194ab024becfb91f74c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPool: {fileID: 1357911488}
+  enemyCount: 6
+  enemyPositions: {fileID: 7166351703523243261}
+  character: {fileID: 4414282821800802396}
+  container: {fileID: 178513672}
+  prefab: {fileID: -462719607902362207, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
   enemyCooldowmSpawner: {fileID: 1357911487}
 --- !u!114 &1357911487
 MonoBehaviour:
@@ -1542,24 +1545,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownSec: 1
---- !u!114 &1357911488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357911484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bdcdf257e0242258e7a67fe13d80e5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyCount: 6
-  enemyPositions: {fileID: 7166351703523243261}
-  character: {fileID: 4414282821800802396}
-  worldTransform: {fileID: 1683128698}
-  container: {fileID: 178513672}
-  prefab: {fileID: -462719607902362207, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
 --- !u!1 &1536551910
 GameObject:
   m_ObjectHideFlags: 0
@@ -2622,7 +2607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842d0440785eb8848802784f611ac13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 3951702117947426123}
   rootListenerObjects:
   - {fileID: 519420028}
   - {fileID: 3951702117947426121}
@@ -2681,6 +2665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 3951702117947426123}
+  managerInstaller: {fileID: 3951702117947426124}
 --- !u!114 &3951702117947426128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2693,6 +2678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3cfb8a045cae249835b6488c97cbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 3951702117947426123}
 --- !u!212 &4162873433806880330
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ namespace Enemies
 
         [Inject]
         public void Construct(EnemyManager enemyManager)
-        {
+        {        
             this._enemyManager = enemyManager;
         }
 
