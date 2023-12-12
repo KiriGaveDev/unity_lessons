@@ -21,9 +21,10 @@ namespace Enemies
         private readonly Queue<Enemy> enemyPool = new();
 
         [Inject]
-        public EnemyPool(BulletSystem bulletSystem, int enemyCount, EnemyPositions enemyPositions, Transform character, Transform container, Enemy prefab)
+        public EnemyPool(BulletSystem bulletSystem, Transform worldTransform, int enemyCount, EnemyPositions enemyPositions, Transform character, Transform container, Enemy prefab)
         {
             _bulletSystem = bulletSystem;
+            _worldTransform = worldTransform;
             _enemyCount = enemyCount;
             _enemyPositions = enemyPositions;
             _character = character;
@@ -42,29 +43,25 @@ namespace Enemies
             }
         }
 
-
-        public bool TrySpawnEnemy(out Enemy enemy) => enemyPool.TryDequeue(out enemy);
-
-
-
+   
         public Enemy SpawnEnemy()
         {
-            if (!TrySpawnEnemy(out Enemy enemy))
+            if (!this.enemyPool.TryDequeue(out var enemy))
             {
                 return null;
             }
 
-            enemy.transform.SetParent(this._worldTransform);
+            enemy.transform.SetParent(_worldTransform);
 
-            var spawnPosition = this._enemyPositions.RandomSpawnPosition();
+            var spawnPosition = _enemyPositions.RandomSpawnPosition();
             enemy.transform.position = spawnPosition.position;
 
-            var attackPosition = this._enemyPositions.RandomAttackPosition();
+            var attackPosition = _enemyPositions.RandomAttackPosition();
             enemy.EnemyMoveAgent.SetDestination(attackPosition.position);
-
 
             return enemy;
         }
+             
 
 
         public void UnspawnEnemy(Enemy enemy)

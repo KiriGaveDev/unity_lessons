@@ -25,19 +25,18 @@ namespace Enemies
 
         public void SpawnEnemy()
         {
-            if(!_enemyPool.TrySpawnEnemy(out Enemy enemy))
+            var enemy = _enemyPool.SpawnEnemy();
+
+            if (enemy != null)
             {
-                return;
+                if (activeEnemies.Add(enemy))
+                {
+                    _gameManager.AddListener(enemy.EnemyAttackAgent);
+                    _gameManager.AddListener(enemy.EnemyMoveAgent);
+
+                    enemy.HitPointsComponent.OnHpEmpty += OnDestroyed;
+                }
             }
-
-           
-            if (activeEnemies.Add(enemy))
-            {
-                _gameManager.AddListener(enemy.EnemyAttackAgent);
-                _gameManager.AddListener(enemy.EnemyMoveAgent);
-
-                enemy.HitPointsComponent.OnHpEmpty += OnDestroyed;
-            }           
         }
 
 

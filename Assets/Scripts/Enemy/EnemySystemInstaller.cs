@@ -10,6 +10,7 @@ namespace Enemies
         [SerializeField] private int enemyCount = 6;
         [SerializeField] private EnemyPositions enemyPositions;
         [SerializeField] private Transform character;
+        [SerializeField] private Transform worldTransform;
        
         [SerializeField] private Transform container;
         [SerializeField] private Enemy prefab;
@@ -18,7 +19,7 @@ namespace Enemies
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<EnemyPool>().AsSingle().WithArguments(enemyCount, enemyPositions, character, container, prefab).NonLazy();
+            Container.BindInterfacesAndSelfTo<EnemyPool>().AsSingle().WithArguments(worldTransform, enemyCount, enemyPositions, character, container, prefab).NonLazy();
             Container.Bind<EnemyManager>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<EnemyCooldownSpawner>().FromInstance(enemyCooldowmSpawner).AsSingle().NonLazy();
         }
