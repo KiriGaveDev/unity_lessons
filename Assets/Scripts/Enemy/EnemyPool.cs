@@ -7,29 +7,25 @@ using Zenject;
 namespace Enemies
 {
     public sealed class EnemyPool : IInitializable
-    {     
+    {
         private readonly int _enemyCount = 6;
 
         private readonly EnemyPositions _enemyPositions;
-        private readonly Transform _character;
-        private readonly BulletSystem _bulletSystem;
         private readonly Transform _worldTransform;
         private readonly Transform _container;
+        private readonly EnemyFactory _enemyFactory;
 
-        private readonly Enemy _prefab;
 
         private readonly Queue<Enemy> enemyPool = new();
 
         [Inject]
-        public EnemyPool(BulletSystem bulletSystem, Transform worldTransform, int enemyCount, EnemyPositions enemyPositions, Transform character, Transform container, Enemy prefab)
-        {
-            _bulletSystem = bulletSystem;
+        public EnemyPool(EnemyFactory enemyFactory, Transform worldTransform, int enemyCount, EnemyPositions enemyPositions, Transform container)
+        {            
+            _enemyFactory = enemyFactory;
             _worldTransform = worldTransform;
             _enemyCount = enemyCount;
-            _enemyPositions = enemyPositions;
-            _character = character;
+            _enemyPositions = enemyPositions;        
             _container = container;
-            _prefab = prefab;
         }
 
 
@@ -37,13 +33,12 @@ namespace Enemies
         {
             for (var i = 0; i <= _enemyCount; i++)
             {
-                var enemy = Object.Instantiate(_prefab, _container);
-                enemy.InitEnemyAttack(_bulletSystem, _character);
+                var enemy = _enemyFactory.CreateEnemy();
                 enemyPool.Enqueue(enemy);
             }
         }
 
-   
+
         public Enemy SpawnEnemy()
         {
             if (!this.enemyPool.TryDequeue(out var enemy))
@@ -61,7 +56,7 @@ namespace Enemies
 
             return enemy;
         }
-             
+
 
 
         public void UnspawnEnemy(Enemy enemy)

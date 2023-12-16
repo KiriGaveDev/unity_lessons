@@ -19,9 +19,10 @@ namespace Enemies
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<EnemyPool>().AsSingle().WithArguments(worldTransform, enemyCount, enemyPositions, character, container, prefab).NonLazy();
+            Container.BindInterfacesAndSelfTo<EnemyPool>().AsSingle().WithArguments(worldTransform, enemyCount, enemyPositions, container).NonLazy();
             Container.Bind<EnemyManager>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<EnemyCooldownSpawner>().FromInstance(enemyCooldowmSpawner).AsSingle().NonLazy();
+            Container.Bind<EnemyFactory>().AsSingle().WithArguments(prefab, container, character).NonLazy();
         }
     }
 }
