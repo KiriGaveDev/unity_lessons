@@ -1,5 +1,6 @@
 using Character;
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,17 +20,26 @@ namespace CharacterUI
         [SerializeField] private TextMeshProUGUI descriptionTxt;
         [SerializeField] private Image characterIcon;
 
+        [Header("Stat prefab ref")]
+        [SerializeField] private Transform statsParent;
+        [SerializeField] private CharacterStatView characterStatViewPrefab;
+
+        private readonly List<CharacterStatView> _characterStats = new();
+
         private CharacterLevel _playerLevel;
         private UserInfo _userInfo;
+        private Character.CharacterInfo _characterInfo;
+
 
 
 
         #region Public Methods
         [Inject]
-        public void Construct(CharacterLevel playerLevel, UserInfo userInfo)
+        public void Construct(CharacterLevel playerLevel, UserInfo userInfo, Character.CharacterInfo characterInfo)
         {
             _playerLevel = playerLevel;
             _userInfo = userInfo;
+            _characterInfo = characterInfo;
         }
 
 
@@ -43,8 +53,10 @@ namespace CharacterUI
             _userInfo.OnNameChanged += UserInfo_OnNameChanged;
             _userInfo.OnDescriptionChanged += UserInfo_OnDescriptionChanged;
             _userInfo.OnIconChanged += UserInfo_OnIconChanged;
-        }
+            _characterInfo.OnStatRemoved += CharacterInfo_OnStatRemoved;
+            _characterInfo.OnStatAdded += CharacterInfo_OnStatAdded;
 
+        }
 
 
         public void Dispose()
@@ -54,6 +66,8 @@ namespace CharacterUI
             _userInfo.OnNameChanged -= UserInfo_OnNameChanged;
             _userInfo.OnDescriptionChanged -= UserInfo_OnDescriptionChanged;
             _userInfo.OnIconChanged -= UserInfo_OnIconChanged;
+            _characterInfo.OnStatRemoved -= CharacterInfo_OnStatRemoved;
+            _characterInfo.OnStatAdded -= CharacterInfo_OnStatAdded;
         }
 
         #endregion
@@ -93,6 +107,37 @@ namespace CharacterUI
             characterIcon.sprite = _userInfo.Icon;
         }
 
+
+        private void AddStat(CharacterStat characterStat)
+        {
+            CharacterStatView stat = Instantiate(characterStatViewPrefab, statsParent);
+            stat.Initialize(characterStat.Name, characterStat.Value);
+            _characterStats.Add(stat);
+            characterStat.OnValueChanged += stat.SetValue;
+        }
+
+
+        private void RemoveStat(CharacterStat characterStat)
+        {
+            CharacterStatView stat = GetStat(characterStat.Name);
+            _characterStats.Remove(stat);
+            characterStat.OnValueChanged -= stat.SetValue;
+            Destroy(stat.gameObject);
+        }
+
+
+        private CharacterStatView GetStat(string statName)
+        {
+            foreach (CharacterStatView stat in _characterStats)
+            {
+                if (stat.StatName == statName)
+                {
+                    return stat;
+                }
+            }
+
+            return null;
+        }
         #endregion
 
 
@@ -128,6 +173,17 @@ namespace CharacterUI
             SetUserDecription();
         }
 
+
+        private void CharacterInfo_OnStatAdded(CharacterStat characterStat)
+        {
+            AddStat(characterStat);
+        }
+
+
+        private void CharacterInfo_OnStatRemoved(CharacterStat characterStat)
+        {
+            RemoveStat(characterStat);
+        }
         #endregion
     }
 

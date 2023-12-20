@@ -12,6 +12,7 @@ namespace Character
 
             Container.Bind<CharacterLevel>().AsSingle().NonLazy();
             Container.Bind<UserInfo>().AsSingle().NonLazy();
+            Container.Bind<CharacterInfo>().AsSingle().NonLazy();            
         }
     }
 }
