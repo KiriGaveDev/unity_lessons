@@ -2443,7 +2443,8 @@ MonoBehaviour:
   descriptionTxt: {fileID: 2054399914}
   characterIcon: {fileID: 421502726}
   statsParent: {fileID: 1580351451}
-  characterStatViewPrefab: {fileID: 0}
+  characterStatViewPrefab: {fileID: -5937106149875308377, guid: 7432977c7508f374e8f947c8e4100c01,
+    type: 3}
 --- !u!1 &1399410254
 GameObject:
   m_ObjectHideFlags: 0
