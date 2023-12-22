@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
+
 
 namespace CharacterUI
 {
-    public class CharacterPopup : MonoBehaviour, IInitializable, IDisposable
+    public class CharacterPopup : MonoBehaviour
     {
+        [SerializeField] private Button closeButton;
+
         [Header("Experience")]
         [SerializeField] private Slider expereinceSlider;
         [SerializeField] private TextMeshProUGUI experienceTxt;
@@ -25,53 +27,54 @@ namespace CharacterUI
         [SerializeField] private CharacterStatView characterStatViewPrefab;
 
         private readonly List<CharacterStatView> _characterStats = new();
+          
 
-        private CharacterLevel _playerLevel;
-        private UserInfo _userInfo;
-        private Character.CharacterInfo _characterInfo;
+        private ICharacterPresenter _characterPresenter;
 
 
+        public void Show(IPresenter presenter)
+        {          
+            if (presenter is not ICharacterPresenter characterPresenter)
+            {
+                Debug.LogError("fail");
+                return;
+            }
+
+            
+            _characterPresenter = characterPresenter;
+            nameTxt.text = _characterPresenter.UserName;
+
+
+            SetExperienceValue(_characterPresenter.CurrentExperience, _characterPresenter.RequiredExperience, 0);
+            SetLevelView(_characterPresenter.Level);
+            SetUserName(_characterPresenter.UserName);
+            SetUserDecription(_characterPresenter.Description);
+            SetUserIcon(_characterPresenter.Icon);
+            gameObject.SetActive(true);
+            closeButton.onClick.AddListener(Hide);
+            _characterPresenter.OnExperienceChanged += CharacterPresenter_OnExperienceChanged;
+        }
 
 
         #region Public Methods
-        [Inject]
-        public void Construct(CharacterLevel playerLevel, UserInfo userInfo, Character.CharacterInfo characterInfo)
-        {
-            _playerLevel = playerLevel;
-            _userInfo = userInfo;
-            _characterInfo = characterInfo;
-        }
 
 
-        public void Initialize()
-        {
-            SetExperienceValue(_playerLevel.CurrentExperience, _playerLevel.RequiredExperience, 0);
-            SetLevelView();
 
-            _playerLevel.OnExperienceChanged += PlayerLevel_OnExperienceChanged;
-            _playerLevel.OnLevelUp += PlayerLevel_OnLevelUp;
-            _userInfo.OnNameChanged += UserInfo_OnNameChanged;
-            _userInfo.OnDescriptionChanged += UserInfo_OnDescriptionChanged;
-            _userInfo.OnIconChanged += UserInfo_OnIconChanged;
-            _characterInfo.OnStatRemoved += CharacterInfo_OnStatRemoved;
-            _characterInfo.OnStatAdded += CharacterInfo_OnStatAdded;
-
-        }
-
-
-        public void Dispose()
-        {
-            _playerLevel.OnExperienceChanged -= PlayerLevel_OnExperienceChanged;
-            _playerLevel.OnLevelUp -= PlayerLevel_OnLevelUp;
-            _userInfo.OnNameChanged -= UserInfo_OnNameChanged;
-            _userInfo.OnDescriptionChanged -= UserInfo_OnDescriptionChanged;
-            _userInfo.OnIconChanged -= UserInfo_OnIconChanged;
-            _characterInfo.OnStatRemoved -= CharacterInfo_OnStatRemoved;
-            _characterInfo.OnStatAdded -= CharacterInfo_OnStatAdded;
-        }
 
         #endregion
+        private void Hide()
+        {
+            gameObject.SetActive(false);
+            closeButton.onClick.RemoveListener(Hide);
+            _characterPresenter.OnExperienceChanged -= CharacterPresenter_OnExperienceChanged;
+        }
 
+
+        private void AddExperience(int value)
+        {           
+            expereinceSlider.value += value;
+            experienceTxt.text = $"XP : {expereinceSlider.value} / {expereinceSlider.maxValue}";
+        }
 
 
         #region Private Methods
@@ -84,27 +87,27 @@ namespace CharacterUI
         }
 
 
-        private void SetLevelView()
+        private void SetLevelView(int level)
         {
-            levelTxt.text = $"Level {_playerLevel.CurrentLevel}";
+            levelTxt.text = $"Level {level}";
         }
 
 
-        private void SetUserName()
+        private void SetUserName(string userName)
         {
-            nameTxt.text = _userInfo.Name;
+            nameTxt.text = userName;
         }
 
 
-        private void SetUserDecription()
+        private void SetUserDecription(string description)
         {
-            descriptionTxt.text = _userInfo.Description;
+            descriptionTxt.text = description;
         }
 
 
-        private void SetUserIcon()
+        private void SetUserIcon(Sprite icon)
         {
-            characterIcon.sprite = _userInfo.Icon;
+            characterIcon.sprite = icon;
         }
 
 
@@ -143,34 +146,34 @@ namespace CharacterUI
 
 
         #region Enents Heandler
-        private void PlayerLevel_OnExperienceChanged(int changedValue)
+        private void CharacterPresenter_OnExperienceChanged(int changedValue)
         {
-            SetExperienceValue(_playerLevel.CurrentExperience, _playerLevel.RequiredExperience, changedValue);
+            AddExperience(changedValue);
         }
 
 
         private void PlayerLevel_OnLevelUp()
         {
-            SetLevelView();
-            SetExperienceValue(_playerLevel.CurrentExperience, _playerLevel.RequiredExperience, 0);
+           // SetLevelView();
+      //      SetExperienceValue(_playerLevel.CurrentExperience, _playerLevel.RequiredExperience, 0);
         }
 
 
         private void UserInfo_OnNameChanged(string userName)
         {
-            SetUserName();
+         //   SetUserName();
         }
 
 
         private void UserInfo_OnIconChanged(Sprite obj)
         {
-            SetUserIcon();
+           // SetUserIcon();
         }
 
 
         private void UserInfo_OnDescriptionChanged(string obj)
         {
-            SetUserDecription();
+           // SetUserDecription();
         }
 
 

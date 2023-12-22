@@ -14,6 +14,7 @@ namespace ButtonsHelpers
             Container.BindInterfacesTo<ButtonRemoveStat>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<ButtonAddStat>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<ButtonChangeStat>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesTo<CharacterPopupHelper>().FromComponentInHierarchy().AsSingle().NonLazy();
         }
     }
 }
