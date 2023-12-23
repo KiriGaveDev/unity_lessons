@@ -11,11 +11,12 @@ namespace ButtonsHelpers
     public class CharacterPopupHelper : MonoBehaviour, IInitializable, IDisposable
     {
         [SerializeField] private Button buttonOpenPopup;
+        [SerializeField] private Button addExpereince;
+
         [SerializeField] private CharacterPopup characterPopup;
         [SerializeField] private CharacterLevelData characterLevelData;
 
-        private CharacterLevel _playerLevel;
-        private UserInfo _userInfo;
+        private CharacterLevel _playerLevel;       
         private Character.CharacterInfo _characterInfo;
 
 
@@ -23,28 +24,42 @@ namespace ButtonsHelpers
         [Inject]
         public void Construct(CharacterLevel playerLevel, UserInfo userInfo, Character.CharacterInfo characterInfo)
         {
-            _playerLevel = playerLevel;
-            _userInfo = userInfo;
+            _playerLevel = playerLevel;           
             _characterInfo = characterInfo;
         }
 
 
         public void Initialize()
         {
-            buttonOpenPopup.onClick.AddListener(OnClick);
+            buttonOpenPopup.onClick.AddListener(ButtonOpenPopup_OnClick);
+            addExpereince.onClick.AddListener(AddExpereince_OnClick);
         }
 
 
         public void Dispose()
         {
-            buttonOpenPopup.onClick.RemoveListener(OnClick);
+            buttonOpenPopup.onClick.RemoveListener(ButtonOpenPopup_OnClick);
+            addExpereince.onClick.RemoveListener(AddExpereince_OnClick);
         }
 
 
-        private void OnClick()
+        private void ButtonOpenPopup_OnClick()
         {
-            var characterPresenter = new CharacterPresenter(_playerLevel, _userInfo, _characterInfo, characterLevelData);
+            var characterPresenter = new CharacterPresenter(_playerLevel, _characterInfo, characterLevelData);
             characterPopup.Show(characterPresenter);
+        }
+
+
+        private void AddExpereince_OnClick()
+        {
+            _playerLevel.AddExperience(50);
+            TryLevelUp();
+        }
+
+
+        private void TryLevelUp()
+        {
+            _playerLevel.LevelUp();
         }
     }
 }

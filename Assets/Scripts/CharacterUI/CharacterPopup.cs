@@ -1,5 +1,4 @@
 using Character;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -27,20 +26,20 @@ namespace CharacterUI
         [SerializeField] private CharacterStatView characterStatViewPrefab;
 
         private readonly List<CharacterStatView> _characterStats = new();
-          
+
 
         private ICharacterPresenter _characterPresenter;
 
 
         public void Show(IPresenter presenter)
-        {          
+        {
             if (presenter is not ICharacterPresenter characterPresenter)
             {
                 Debug.LogError("fail");
                 return;
             }
 
-            
+
             _characterPresenter = characterPresenter;
             nameTxt.text = _characterPresenter.UserName;
 
@@ -50,29 +49,44 @@ namespace CharacterUI
             SetUserName(_characterPresenter.UserName);
             SetUserDecription(_characterPresenter.Description);
             SetUserIcon(_characterPresenter.Icon);
+            CreateStatsView(_characterPresenter.CharacterStats);
             gameObject.SetActive(true);
             closeButton.onClick.AddListener(Hide);
             _characterPresenter.OnExperienceChanged += CharacterPresenter_OnExperienceChanged;
+            _characterPresenter.OnLevelUp += CharacterPresenter_OnLevelUp;
         }
 
 
-        #region Public Methods
-
-
-
-
-        #endregion
         private void Hide()
         {
             gameObject.SetActive(false);
             closeButton.onClick.RemoveListener(Hide);
             _characterPresenter.OnExperienceChanged -= CharacterPresenter_OnExperienceChanged;
+            _characterPresenter.OnLevelUp -= CharacterPresenter_OnLevelUp;
+        }
+
+
+        private void CreateStatsView(HashSet<CharacterStat> characterStats)
+        {
+            foreach (CharacterStatView statsView in _characterStats)
+            {
+                Destroy(statsView.gameObject);
+            }
+
+            _characterStats.Clear();
+
+            foreach (CharacterStat characterStat in characterStats)
+            {
+                CharacterStatView stat = Instantiate(characterStatViewPrefab, statsParent);
+                stat.Initialize(characterStat.Name, characterStat.Value);
+                _characterStats.Add(stat);
+            }
         }
 
 
         private void AddExperience(int value)
-        {           
-            expereinceSlider.value += value;
+        {
+            expereinceSlider.value = value;
             experienceTxt.text = $"XP : {expereinceSlider.value} / {expereinceSlider.maxValue}";
         }
 
@@ -109,38 +123,6 @@ namespace CharacterUI
         {
             characterIcon.sprite = icon;
         }
-
-
-        private void AddStat(CharacterStat characterStat)
-        {
-            CharacterStatView stat = Instantiate(characterStatViewPrefab, statsParent);
-            stat.Initialize(characterStat.Name, characterStat.Value);
-            _characterStats.Add(stat);
-            characterStat.OnValueChanged += stat.SetValue;
-        }
-
-
-        private void RemoveStat(CharacterStat characterStat)
-        {
-            CharacterStatView stat = GetStat(characterStat.Name);
-            _characterStats.Remove(stat);
-            characterStat.OnValueChanged -= stat.SetValue;
-            Destroy(stat.gameObject);
-        }
-
-
-        private CharacterStatView GetStat(string statName)
-        {
-            foreach (CharacterStatView stat in _characterStats)
-            {
-                if (stat.StatName == statName)
-                {
-                    return stat;
-                }
-            }
-
-            return null;
-        }
         #endregion
 
 
@@ -152,42 +134,14 @@ namespace CharacterUI
         }
 
 
-        private void PlayerLevel_OnLevelUp()
+        private void CharacterPresenter_OnLevelUp()
         {
-           // SetLevelView();
-      //      SetExperienceValue(_playerLevel.CurrentExperience, _playerLevel.RequiredExperience, 0);
+            SetLevelView(_characterPresenter.Level);
+            SetExperienceValue(_characterPresenter.CurrentExperience, _characterPresenter.RequiredExperience, 0);
+            CreateStatsView(_characterPresenter.CharacterStats);            
         }
 
-
-        private void UserInfo_OnNameChanged(string userName)
-        {
-         //   SetUserName();
-        }
-
-
-        private void UserInfo_OnIconChanged(Sprite obj)
-        {
-           // SetUserIcon();
-        }
-
-
-        private void UserInfo_OnDescriptionChanged(string obj)
-        {
-           // SetUserDecription();
-        }
-
-
-        private void CharacterInfo_OnStatAdded(CharacterStat characterStat)
-        {
-            AddStat(characterStat);
-        }
-
-
-        private void CharacterInfo_OnStatRemoved(CharacterStat characterStat)
-        {
-            RemoveStat(characterStat);
-        }
         #endregion
     }
-
 }
+

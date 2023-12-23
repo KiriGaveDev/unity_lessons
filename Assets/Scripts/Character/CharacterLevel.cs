@@ -1,5 +1,5 @@
 using System;
-
+using System.Diagnostics;
 
 namespace Character
 {
@@ -21,7 +21,7 @@ namespace Character
 
     
         public void AddExperience(int range)
-        {
+        {            
             var xp = Math.Min(this.CurrentExperience + range, this.RequiredExperience);
             this.CurrentExperience = xp;
             this.OnExperienceChanged?.Invoke(xp);

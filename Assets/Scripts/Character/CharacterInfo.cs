@@ -13,7 +13,9 @@ namespace Character
        
         private readonly HashSet<CharacterStat> stats = new();
 
-     
+        public HashSet<CharacterStat> Stats => stats;
+
+
         public void AddStat(CharacterStat stat)
         {
             if (this.stats.Add(stat))

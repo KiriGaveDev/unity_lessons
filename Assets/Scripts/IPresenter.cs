@@ -1,3 +1,4 @@
+using Character;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ public interface ICharacterPresenter : IPresenter
     public int RequiredExperience { get; }
     public int Level { get; }
     public Sprite Icon { get; }
+    public HashSet<CharacterStat> CharacterStats { get; }
 
     event Action<int> OnExperienceChanged;
+    event Action OnLevelUp;
 }
