@@ -22,9 +22,9 @@ namespace CharacterPopupHelper
         private Character.CharacterInfo _characterInfo;
 
 
-       
+        [Inject]       
         public void Construct(CharacterLevel playerLevel, UserInfo userInfo, Character.CharacterInfo characterInfo)
-        {
+        {                     
             _playerLevel = playerLevel;           
             _characterInfo = characterInfo;
         }
@@ -42,13 +42,14 @@ namespace CharacterPopupHelper
         {
             _buttonOpenPopup.onClick.RemoveListener(ButtonOpenPopup_OnClick);
             _buttonAddExpereince.onClick.RemoveListener(ButtonAddExpereince_OnClick);
+            _buttonLevelUp.onClick.RemoveListener(ButtonLevelUp_OnClick);
         }
 
 
         private void ButtonOpenPopup_OnClick()
         {
-            var characterPresenter = new CharacterPresenter(_playerLevel, _characterInfo, _characterLevelData);
-            _characterPopup.Show(characterPresenter);
+            var characterPresenter = new CharacterPresenter(_characterInfo, _characterLevelData, _playerLevel);         
+            _characterPopup.Show(characterPresenter);           
         }
 
 

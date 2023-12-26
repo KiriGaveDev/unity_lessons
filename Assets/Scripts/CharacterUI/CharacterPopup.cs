@@ -14,9 +14,8 @@ namespace CharacterUI
         [SerializeField] private Button _closeButton;
 
         [Header("Experience")]
-        [SerializeField] private Slider _expereinceSlider;
-        [SerializeField] private TextMeshProUGUI _experienceTxt;
-        [SerializeField] private TextMeshProUGUI _levelTxt;
+        [SerializeField] private CharacterExperienceView _experienceView;
+        
 
         [Header("User Info")]
         [SerializeField] private TextMeshProUGUI _nameTxt;
@@ -30,7 +29,7 @@ namespace CharacterUI
         private readonly List<CharacterStatView> _characterStats = new();
 
 
-        private ICharacterPresenter _characterPresenter;
+        private ICharacterPresenter _characterPresenter;    
 
 
         public void Show(IPresenter presenter)
@@ -39,32 +38,25 @@ namespace CharacterUI
             {
                 Debug.LogError("fail");
                 return;
-            }
-
+            }            
 
             _characterPresenter = characterPresenter;
             _nameTxt.text = _characterPresenter.UserName;
 
-
-            SetExperienceValue(_characterPresenter.CurrentExperience, _characterPresenter.RequiredExperience, 0);
-            SetLevelView(_characterPresenter.Level);
+            _experienceView.Show(_characterPresenter.ExperiencePresenter);
             SetUserName(_characterPresenter.UserName);
             SetUserDecription(_characterPresenter.Description);
             SetUserIcon(_characterPresenter.Icon);
             CreateStatsView(_characterPresenter.CharacterStats);
             gameObject.SetActive(true);
-            _closeButton.onClick.AddListener(Hide);
-            _characterPresenter.OnExperienceChanged += CharacterPresenter_OnExperienceChanged;
-            _characterPresenter.OnLevelUp += CharacterPresenter_OnLevelUp;
+            _closeButton.onClick.AddListener(Hide);          
         }
-
+        
 
         private void Hide()
         {
             gameObject.SetActive(false);
-            _closeButton.onClick.RemoveListener(Hide);
-            _characterPresenter.OnExperienceChanged -= CharacterPresenter_OnExperienceChanged;
-            _characterPresenter.OnLevelUp -= CharacterPresenter_OnLevelUp;
+            _closeButton.onClick.RemoveListener(Hide);           
         }
 
 
@@ -85,29 +77,8 @@ namespace CharacterUI
             }
         }
 
-
-        private void AddExperience(int value)
-        {
-            _expereinceSlider.value = value;
-            _experienceTxt.text = $"XP : {_expereinceSlider.value} / {_expereinceSlider.maxValue}";
-        }
-
-
         #region Private Methods
-        private void SetExperienceValue(int current, int target, int changedValue)
-        {
-            _expereinceSlider.maxValue = target;
-            _expereinceSlider.value = current;
-
-            _experienceTxt.text = $"XP : {current} / {target}";
-        }
-
-
-        private void SetLevelView(int level)
-        {
-            _levelTxt.text = $"Level {level}";
-        }
-
+     
 
         private void SetUserName(string userName)
         {
@@ -125,25 +96,7 @@ namespace CharacterUI
         {
             _characterIcon.sprite = icon;
         }
-        #endregion
-
-
-
-        #region Enents Heandler
-        private void CharacterPresenter_OnExperienceChanged(int changedValue)
-        {
-            AddExperience(changedValue);
-        }
-
-
-        private void CharacterPresenter_OnLevelUp()
-        {
-            SetLevelView(_characterPresenter.Level);
-            SetExperienceValue(_characterPresenter.CurrentExperience, _characterPresenter.RequiredExperience, 0);
-            CreateStatsView(_characterPresenter.CharacterStats);            
-        }
-
-        #endregion
+        #endregion       
     }
 }
 

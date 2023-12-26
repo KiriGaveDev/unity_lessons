@@ -9,15 +9,10 @@ namespace Presenter.CharacterPresenter
     public interface ICharacterPresenter : IPresenter
     {
         public string UserName { get; }
-        public string Description { get; }
-        public int CurrentExperience { get; }
-        public int RequiredExperience { get; }
-        public int Level { get; }
+        public string Description { get; }      
         public Sprite Icon { get; }
-        public HashSet<CharacterStat> CharacterStats { get; }
-
-        event Action<int> OnExperienceChanged;
-        event Action OnLevelUp;
+        public HashSet<CharacterStat> CharacterStats { get; }    
+        public ICharacterExperiencePresenter ExperiencePresenter { get; }
     }
 
 }

@@ -580,7 +580,7 @@ RectTransform:
   m_Children:
   - {fileID: 1424186209}
   m_Father: {fileID: 586466750}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -599,10 +599,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff943f07a72e9d42a4268ea76973e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonOpenPopup: {fileID: 458114903}
-  addExpereince: {fileID: 1978910630}
-  characterPopup: {fileID: 1159567378}
-  characterLevelData: {fileID: 11400000, guid: 423ababa6d9e5a343ba45c0d47fcb90b, type: 2}
+  _buttonOpenPopup: {fileID: 458114903}
+  _buttonAddExpereince: {fileID: 1978910630}
+  _buttonLevelUp: {fileID: 1986891844}
+  _characterPopup: {fileID: 1159567378}
+  _characterLevelData: {fileID: 11400000, guid: 423ababa6d9e5a343ba45c0d47fcb90b,
+    type: 2}
 --- !u!114 &458114903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1196,8 +1198,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1978910629}
   - {fileID: 458114901}
+  - {fileID: 1978910629}
   - {fileID: 1986891842}
   m_Father: {fileID: 1907786185}
   m_RootOrder: 1
@@ -1409,6 +1411,7 @@ GameObject:
   - component: {fileID: 1159567375}
   - component: {fileID: 1159567377}
   - component: {fileID: 1159567378}
+  - component: {fileID: 1159567379}
   m_Layer: 5
   m_Name: CharacterPopup
   m_TagString: Untagged
@@ -1458,16 +1461,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9691ccf59375914c9b81131922848cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closeButton: {fileID: 32000711}
-  expereinceSlider: {fileID: 383808037}
-  experienceTxt: {fileID: 561532075}
-  levelTxt: {fileID: 478432180}
-  nameTxt: {fileID: 533330488}
-  descriptionTxt: {fileID: 2054399914}
-  characterIcon: {fileID: 421502726}
-  statsParent: {fileID: 1580351451}
-  characterStatViewPrefab: {fileID: -5937106149875308377, guid: 7432977c7508f374e8f947c8e4100c01,
+  _closeButton: {fileID: 32000711}
+  _experienceView: {fileID: 1159567379}
+  _nameTxt: {fileID: 533330488}
+  _descriptionTxt: {fileID: 2054399914}
+  _characterIcon: {fileID: 421502726}
+  _statsParent: {fileID: 1580351451}
+  _characterStatViewPrefab: {fileID: -5937106149875308377, guid: 7432977c7508f374e8f947c8e4100c01,
     type: 3}
+--- !u!114 &1159567379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159567374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6291290c5561f6f48bfa81fb289a32dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _expereinceSlider: {fileID: 383808037}
+  _experienceTxt: {fileID: 561532075}
+  _levelTxt: {fileID: 478432180}
 --- !u!1 &1192990782
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,7 +1542,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Add Experience '
+  m_text: Level UP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2275,7 +2291,7 @@ RectTransform:
   m_Children:
   - {fileID: 161031734}
   m_Father: {fileID: 586466750}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2376,7 +2392,6 @@ GameObject:
   - component: {fileID: 1986891846}
   - component: {fileID: 1986891845}
   - component: {fileID: 1986891844}
-  - component: {fileID: 1986891843}
   m_Layer: 5
   m_Name: ButtonLevelUp
   m_TagString: Untagged
@@ -2405,20 +2420,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1986891843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986891841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537606fa0a7270043a4361c18d4a88a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 1986891844}
-  buttonBackground: {fileID: 1986891845}
 --- !u!114 &1986891844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2590,7 +2591,7 @@ GameObject:
   - component: {fileID: 2054399915}
   - component: {fileID: 2054399914}
   m_Layer: 5
-  m_Name: TextDescCgaracter
+  m_Name: TextDescCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
