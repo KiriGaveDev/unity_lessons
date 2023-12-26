@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CharacterStatView : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI statNameTxt;
-    [SerializeField] private TextMeshProUGUI statValueTxt;
+    [SerializeField] private TextMeshProUGUI _statNameTxt;
+    [SerializeField] private TextMeshProUGUI _statValueTxt;
 
     private string _statName;
 
@@ -15,13 +15,13 @@ public class CharacterStatView : MonoBehaviour
     {
         _statName = statName;
 
-        statNameTxt.text = statName;
+        _statNameTxt.text = statName;
         SetValue(statValue);
     }
 
 
     public void SetValue(int value)
     {
-        statValueTxt.text = value.ToString();
+        _statValueTxt.text = value.ToString();
     }
 }

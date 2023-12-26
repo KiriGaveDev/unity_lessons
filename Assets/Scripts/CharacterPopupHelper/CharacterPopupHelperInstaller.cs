@@ -1,8 +1,8 @@
 using Zenject;
 
-namespace ButtonsHelpers
+namespace CharacterPopupHelper
 {
-    public class ButtonHealpersInstaller : MonoInstaller<ButtonHealpersInstaller>
+    public class CharacterPopupHelperInstaller : MonoInstaller<CharacterPopupHelperInstaller>
     {
         public override void InstallBindings()
         {         

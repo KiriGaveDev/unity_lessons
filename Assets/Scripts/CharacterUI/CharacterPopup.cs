@@ -1,4 +1,6 @@
 using Character;
+using Presenter;
+using Presenter.CharacterPresenter;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,21 +11,21 @@ namespace CharacterUI
 {
     public class CharacterPopup : MonoBehaviour
     {
-        [SerializeField] private Button closeButton;
+        [SerializeField] private Button _closeButton;
 
         [Header("Experience")]
-        [SerializeField] private Slider expereinceSlider;
-        [SerializeField] private TextMeshProUGUI experienceTxt;
-        [SerializeField] private TextMeshProUGUI levelTxt;
+        [SerializeField] private Slider _expereinceSlider;
+        [SerializeField] private TextMeshProUGUI _experienceTxt;
+        [SerializeField] private TextMeshProUGUI _levelTxt;
 
         [Header("User Info")]
-        [SerializeField] private TextMeshProUGUI nameTxt;
-        [SerializeField] private TextMeshProUGUI descriptionTxt;
-        [SerializeField] private Image characterIcon;
+        [SerializeField] private TextMeshProUGUI _nameTxt;
+        [SerializeField] private TextMeshProUGUI _descriptionTxt;
+        [SerializeField] private Image _characterIcon;
 
         [Header("Stat prefab ref")]
-        [SerializeField] private Transform statsParent;
-        [SerializeField] private CharacterStatView characterStatViewPrefab;
+        [SerializeField] private Transform _statsParent;
+        [SerializeField] private CharacterStatView _characterStatViewPrefab;
 
         private readonly List<CharacterStatView> _characterStats = new();
 
@@ -41,7 +43,7 @@ namespace CharacterUI
 
 
             _characterPresenter = characterPresenter;
-            nameTxt.text = _characterPresenter.UserName;
+            _nameTxt.text = _characterPresenter.UserName;
 
 
             SetExperienceValue(_characterPresenter.CurrentExperience, _characterPresenter.RequiredExperience, 0);
@@ -51,7 +53,7 @@ namespace CharacterUI
             SetUserIcon(_characterPresenter.Icon);
             CreateStatsView(_characterPresenter.CharacterStats);
             gameObject.SetActive(true);
-            closeButton.onClick.AddListener(Hide);
+            _closeButton.onClick.AddListener(Hide);
             _characterPresenter.OnExperienceChanged += CharacterPresenter_OnExperienceChanged;
             _characterPresenter.OnLevelUp += CharacterPresenter_OnLevelUp;
         }
@@ -60,7 +62,7 @@ namespace CharacterUI
         private void Hide()
         {
             gameObject.SetActive(false);
-            closeButton.onClick.RemoveListener(Hide);
+            _closeButton.onClick.RemoveListener(Hide);
             _characterPresenter.OnExperienceChanged -= CharacterPresenter_OnExperienceChanged;
             _characterPresenter.OnLevelUp -= CharacterPresenter_OnLevelUp;
         }
@@ -77,7 +79,7 @@ namespace CharacterUI
 
             foreach (CharacterStat characterStat in characterStats)
             {
-                CharacterStatView stat = Instantiate(characterStatViewPrefab, statsParent);
+                CharacterStatView stat = Instantiate(_characterStatViewPrefab, _statsParent);
                 stat.Initialize(characterStat.Name, characterStat.Value);
                 _characterStats.Add(stat);
             }
@@ -86,42 +88,42 @@ namespace CharacterUI
 
         private void AddExperience(int value)
         {
-            expereinceSlider.value = value;
-            experienceTxt.text = $"XP : {expereinceSlider.value} / {expereinceSlider.maxValue}";
+            _expereinceSlider.value = value;
+            _experienceTxt.text = $"XP : {_expereinceSlider.value} / {_expereinceSlider.maxValue}";
         }
 
 
         #region Private Methods
         private void SetExperienceValue(int current, int target, int changedValue)
         {
-            expereinceSlider.maxValue = target;
-            expereinceSlider.value = current;
+            _expereinceSlider.maxValue = target;
+            _expereinceSlider.value = current;
 
-            experienceTxt.text = $"XP : {current} / {target}";
+            _experienceTxt.text = $"XP : {current} / {target}";
         }
 
 
         private void SetLevelView(int level)
         {
-            levelTxt.text = $"Level {level}";
+            _levelTxt.text = $"Level {level}";
         }
 
 
         private void SetUserName(string userName)
         {
-            nameTxt.text = userName;
+            _nameTxt.text = userName;
         }
 
 
         private void SetUserDecription(string description)
         {
-            descriptionTxt.text = description;
+            _descriptionTxt.text = description;
         }
 
 
         private void SetUserIcon(Sprite icon)
         {
-            characterIcon.sprite = icon;
+            _characterIcon.sprite = icon;
         }
         #endregion
 

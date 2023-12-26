@@ -31,26 +31,27 @@ public class CharacterLevelSettings
 [CreateAssetMenu(fileName = "CharacterLevelData", menuName = "Configs/CharacterLevelData")]
 public class CharacterLevelData : ScriptableObject
 {
-    [SerializeField] private CharacterLevelSettings characterLevelSettings;
+    [SerializeField] private CharacterLevelSettings _characterLevelSettings;
 
-    public CharacterLevelSettings CharacterLevelSettings => characterLevelSettings;
+    public CharacterLevelSettings CharacterLevelSettings => _characterLevelSettings;
 
 
-    public ExperienceSettings GetRequireExp(int level) => characterLevelSettings.experienceSettings[level];
+    public ExperienceSettings GetRequireExp(int level) => _characterLevelSettings.experienceSettings[level];
 
 
     public List<StatSettings> GetCharacterStats()
     {
-        return characterLevelSettings.statSettings;
+        return _characterLevelSettings.statSettings;
     }
+
 
     public int GetValueByLevel(string name, int level)
     {
-        for (int i = 0; i < characterLevelSettings.statSettings.Count; i++)
+        for (int i = 0; i < _characterLevelSettings.statSettings.Count; i++)
         {
-            if (characterLevelSettings.statSettings[i].nameStat == name)
+            if (_characterLevelSettings.statSettings[i].nameStat == name)
             {
-                return characterLevelSettings.statSettings[i].value[level];
+                return _characterLevelSettings.statSettings[i].value[level];
             }
         }
 
