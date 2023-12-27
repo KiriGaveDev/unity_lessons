@@ -27,8 +27,11 @@ namespace CharacterUI
             _statsPresenter = statsPresenter;
 
             CreateStatsView(_statsPresenter.CharacterStats);
+
+            _statsPresenter.OnLevelUp += StatsPresenter_OnLevelUp;
         }
 
+        
 
         private void CreateStatsView(HashSet<CharacterStat> characterStats)
         {
@@ -45,6 +48,11 @@ namespace CharacterUI
                 stat.Initialize(characterStat.Name, characterStat.Value);
                 _characterStats.Add(stat);
             }
+        }
+
+        private void StatsPresenter_OnLevelUp()
+        {
+            CreateStatsView(_statsPresenter.CharacterStats);
         }
     }
 

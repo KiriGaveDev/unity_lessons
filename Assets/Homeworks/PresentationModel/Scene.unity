@@ -1465,7 +1465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _experienceView: {fileID: 1159567379}
   _infoView: {fileID: 1159567380}
-  _statsView: {fileID: 0}
+  _statsView: {fileID: 1159567381}
   _closeButton: {fileID: 32000711}
 --- !u!114 &1159567379
 MonoBehaviour:
