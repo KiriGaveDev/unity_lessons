@@ -1,13 +1,9 @@
-using Character;
-using System.Collections.Generic;
-
-
 namespace Presenter.CharacterPresenter
 {
     public interface ICharacterPresenter : IPresenter
     {
-        public ICharacterInfoPresenter CharacterInfoPresenter { get; }
+        public ICharacterInfoPresenter InfoPresenter { get; }
         public ICharacterExperiencePresenter ExperiencePresenter { get; }
-        public HashSet<CharacterStat> CharacterStats { get; }
+        public ICharacterStatsPresenter StatsPresenter { get; }     
     }
 }

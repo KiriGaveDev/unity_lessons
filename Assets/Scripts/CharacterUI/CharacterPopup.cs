@@ -13,14 +13,11 @@ namespace CharacterUI
     {    
         [SerializeField] private CharacterExperienceView _experienceView;
         [SerializeField] private CharacterInfoView _infoView;
+        [SerializeField] private CharacterStatsView _statsView;
 
         [SerializeField] private Button _closeButton;
 
-        [Header("Stat prefab ref")]
-        [SerializeField] private Transform _statsParent;
-        [SerializeField] private CharacterStatView _characterStatViewPrefab;
-
-        private readonly List<CharacterStatView> _characterStats = new();
+        
 
 
         private ICharacterPresenter _characterPresenter;    
@@ -36,9 +33,9 @@ namespace CharacterUI
             _characterPresenter = characterPresenter;
 
             _experienceView.Show(_characterPresenter.ExperiencePresenter);
-            _infoView.Show(_characterPresenter.CharacterInfoPresenter);
-            
-            CreateStatsView(_characterPresenter.CharacterStats);
+            _infoView.Show(_characterPresenter.InfoPresenter);
+            _statsView.Show(_characterPresenter.StatsPresenter);
+
             gameObject.SetActive(true);
             _closeButton.onClick.AddListener(Hide);          
         }
@@ -49,24 +46,7 @@ namespace CharacterUI
             gameObject.SetActive(false);
             _closeButton.onClick.RemoveListener(Hide);           
         }
-
-
-        private void CreateStatsView(HashSet<CharacterStat> characterStats)
-        {
-            foreach (CharacterStatView statsView in _characterStats)
-            {
-                Destroy(statsView.gameObject);
-            }
-
-            _characterStats.Clear();
-
-            foreach (CharacterStat characterStat in characterStats)
-            {
-                CharacterStatView stat = Instantiate(_characterStatViewPrefab, _statsParent);
-                stat.Initialize(characterStat.Name, characterStat.Value);
-                _characterStats.Add(stat);
-            }
-        }           
+        
     }
 }
 
