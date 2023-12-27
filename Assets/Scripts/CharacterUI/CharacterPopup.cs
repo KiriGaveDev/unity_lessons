@@ -1,8 +1,8 @@
 using Character;
 using Presenter;
 using Presenter.CharacterPresenter;
+using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,17 +10,11 @@ using UnityEngine.UI;
 namespace CharacterUI
 {
     public class CharacterPopup : MonoBehaviour
-    {
-        [SerializeField] private Button _closeButton;
-
-        [Header("Experience")]
+    {    
         [SerializeField] private CharacterExperienceView _experienceView;
-        
+        [SerializeField] private CharacterInfoView _infoView;
 
-        [Header("User Info")]
-        [SerializeField] private TextMeshProUGUI _nameTxt;
-        [SerializeField] private TextMeshProUGUI _descriptionTxt;
-        [SerializeField] private Image _characterIcon;
+        [SerializeField] private Button _closeButton;
 
         [Header("Stat prefab ref")]
         [SerializeField] private Transform _statsParent;
@@ -36,17 +30,14 @@ namespace CharacterUI
         {
             if (presenter is not ICharacterPresenter characterPresenter)
             {
-                Debug.LogError("fail");
-                return;
-            }            
+                throw new Exception($"Invalid presenter type. Expected {nameof(ICharacterPresenter)}.");
+            }
 
             _characterPresenter = characterPresenter;
-            _nameTxt.text = _characterPresenter.UserName;
 
             _experienceView.Show(_characterPresenter.ExperiencePresenter);
-            SetUserName(_characterPresenter.UserName);
-            SetUserDecription(_characterPresenter.Description);
-            SetUserIcon(_characterPresenter.Icon);
+            _infoView.Show(_characterPresenter.CharacterInfoPresenter);
+            
             CreateStatsView(_characterPresenter.CharacterStats);
             gameObject.SetActive(true);
             _closeButton.onClick.AddListener(Hide);          
@@ -75,28 +66,7 @@ namespace CharacterUI
                 stat.Initialize(characterStat.Name, characterStat.Value);
                 _characterStats.Add(stat);
             }
-        }
-
-        #region Private Methods
-     
-
-        private void SetUserName(string userName)
-        {
-            _nameTxt.text = userName;
-        }
-
-
-        private void SetUserDecription(string description)
-        {
-            _descriptionTxt.text = description;
-        }
-
-
-        private void SetUserIcon(Sprite icon)
-        {
-            _characterIcon.sprite = icon;
-        }
-        #endregion       
+        }           
     }
 }
 

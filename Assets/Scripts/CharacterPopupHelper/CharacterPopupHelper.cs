@@ -46,6 +46,12 @@ namespace CharacterPopupHelper
         }
 
 
+        private void TryLevelUp()
+        {
+            _playerLevel.LevelUp();
+        }
+
+
         private void ButtonOpenPopup_OnClick()
         {
             var characterPresenter = new CharacterPresenter(_characterInfo, _characterLevelData, _playerLevel);         
@@ -57,13 +63,7 @@ namespace CharacterPopupHelper
         {
             _playerLevel.AddExperience(50);           
         }
-
-
-        private void TryLevelUp()
-        {
-            _playerLevel.LevelUp();
-        }
-
+       
 
         private void ButtonLevelUp_OnClick()
         {

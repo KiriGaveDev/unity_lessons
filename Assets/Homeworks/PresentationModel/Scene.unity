@@ -1412,6 +1412,7 @@ GameObject:
   - component: {fileID: 1159567377}
   - component: {fileID: 1159567378}
   - component: {fileID: 1159567379}
+  - component: {fileID: 1159567380}
   m_Layer: 5
   m_Name: CharacterPopup
   m_TagString: Untagged
@@ -1461,11 +1462,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9691ccf59375914c9b81131922848cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _closeButton: {fileID: 32000711}
   _experienceView: {fileID: 1159567379}
-  _nameTxt: {fileID: 533330488}
-  _descriptionTxt: {fileID: 2054399914}
-  _characterIcon: {fileID: 421502726}
+  _infoView: {fileID: 1159567380}
+  _closeButton: {fileID: 32000711}
   _statsParent: {fileID: 1580351451}
   _characterStatViewPrefab: {fileID: -5937106149875308377, guid: 7432977c7508f374e8f947c8e4100c01,
     type: 3}
@@ -1484,6 +1483,21 @@ MonoBehaviour:
   _expereinceSlider: {fileID: 383808037}
   _experienceTxt: {fileID: 561532075}
   _levelTxt: {fileID: 478432180}
+--- !u!114 &1159567380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159567374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2c231516a7bb5d4c89e9a57860e4415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _userNameTxt: {fileID: 533330488}
+  _descriptionTxt: {fileID: 2054399914}
+  _icon: {fileID: 421502726}
 --- !u!1 &1192990782
 GameObject:
   m_ObjectHideFlags: 0

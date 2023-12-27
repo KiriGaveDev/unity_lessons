@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a932f606606a048bdc051d62c5ae41, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  characterLevelSettings:
-    userName: Stan
-    descritrion: I am the best warrior in the Light Kingdom
+  _characterLevelSettings:
+    userName: Mashina
+    descritrion: I am the best warrior
     icon: {fileID: 21300000, guid: 954d79ad0f5124da59b33552ab47a641, type: 3}
     experienceSettings:
-    - requireExp: 123
-    - requireExp: 234
-    - requireExp: 345
-    - requireExp: 456
-    - requireExp: 567
+    - requireExp: 100
+    - requireExp: 200
+    - requireExp: 300
+    - requireExp: 400
+    - requireExp: 500
+    - requireExp: 600
     statSettings:
     - nameStat: Move Speed
-      value: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
+      value: 0a0000000f00000014000000190000001e00000032000000
     - nameStat: Power
-      value: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
-    - nameStat: Attack Speed
-      value: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
+      value: 0a0000000f00000014000000190000001e00000032000000
+    - nameStat: Attac Speed
+      value: 0a0000000f00000014000000190000001e00000032000000
