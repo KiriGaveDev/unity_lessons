@@ -4,11 +4,9 @@ using Presenter.CharacterPresenter;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-
 namespace CharacterUI
 {
-    public class CharacterStatsView : MonoBehaviour
+    public sealed class CharacterStatsView : MonoBehaviour
     {
         [SerializeField] private Transform _statsParent;
         [SerializeField] private CharacterStatView _characterStatViewPrefab;
@@ -32,7 +30,6 @@ namespace CharacterUI
         }
 
         
-
         private void CreateStatsView(HashSet<CharacterStat> characterStats)
         {
             foreach (CharacterStatView statsView in _characterStats)
@@ -49,6 +46,7 @@ namespace CharacterUI
                 _characterStats.Add(stat);
             }
         }
+
 
         private void StatsPresenter_OnLevelUp()
         {

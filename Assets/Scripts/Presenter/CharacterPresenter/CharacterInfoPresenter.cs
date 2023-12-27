@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Presenter.CharacterPresenter
 {
-    public class CharacterInfoPresenter : ICharacterInfoPresenter
+    public sealed class CharacterInfoPresenter : ICharacterInfoPresenter
     {
         public string Name => _characterLevelData.CharacterLevelSettings.userName;
 

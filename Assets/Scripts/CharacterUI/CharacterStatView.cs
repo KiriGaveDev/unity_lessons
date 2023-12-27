@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 
-public class CharacterStatView : MonoBehaviour
+public sealed class CharacterStatView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _statNameTxt;
     [SerializeField] private TextMeshProUGUI _statValueTxt;

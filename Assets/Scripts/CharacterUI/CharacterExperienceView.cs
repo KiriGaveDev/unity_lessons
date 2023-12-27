@@ -15,6 +15,7 @@ namespace CharacterUI
 
         private ICharacterExperiencePresenter _characterExperiencePresenter;
 
+
         public void Show(IPresenter presenter)
         {
             if (presenter is not ICharacterExperiencePresenter characterPresenter)

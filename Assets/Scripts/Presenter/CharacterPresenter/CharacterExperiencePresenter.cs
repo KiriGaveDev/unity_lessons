@@ -4,7 +4,7 @@ using System;
 
 namespace Presenter.CharacterPresenter
 {
-    public class CharacterExperiencePresenter : ICharacterExperiencePresenter, IDisposable
+    public sealed class CharacterExperiencePresenter : ICharacterExperiencePresenter, IDisposable
     {
         public event Action<int> OnExperienceChanged;
         public event Action OnLevelUp;

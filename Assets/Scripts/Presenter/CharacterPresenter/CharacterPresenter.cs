@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Presenter.CharacterPresenter
 {
-    public class CharacterPresenter : ICharacterPresenter
+    public sealed class CharacterPresenter : ICharacterPresenter
     {       
         public HashSet<CharacterStat> CharacterStats => _characterInfo.Stats;
 

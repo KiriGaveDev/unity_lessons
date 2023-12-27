@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace CharacterUI
 {
-    public class CharacterInfoView : MonoBehaviour
+    public sealed class CharacterInfoView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _userNameTxt;
         [SerializeField] private TextMeshProUGUI _descriptionTxt;

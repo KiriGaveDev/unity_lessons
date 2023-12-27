@@ -1,23 +1,19 @@
-using Character;
 using Presenter;
 using Presenter.CharacterPresenter;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 namespace CharacterUI
 {
-    public class CharacterPopup : MonoBehaviour
+    public sealed class CharacterPopup : MonoBehaviour
     {    
         [SerializeField] private CharacterExperienceView _experienceView;
         [SerializeField] private CharacterInfoView _infoView;
         [SerializeField] private CharacterStatsView _statsView;
 
-        [SerializeField] private Button _closeButton;
-
-        
+        [SerializeField] private Button _closeButton;      
 
 
         private ICharacterPresenter _characterPresenter;    

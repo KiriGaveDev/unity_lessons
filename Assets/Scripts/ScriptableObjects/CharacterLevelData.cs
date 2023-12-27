@@ -29,7 +29,7 @@ public class CharacterLevelSettings
 
 
 [CreateAssetMenu(fileName = "CharacterLevelData", menuName = "Configs/CharacterLevelData")]
-public class CharacterLevelData : ScriptableObject
+public sealed class CharacterLevelData : ScriptableObject
 {
     [SerializeField] private CharacterLevelSettings _characterLevelSettings;
 
